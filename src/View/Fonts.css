@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "SDB";
+  src: url("/src/fonts/AppleSDGothicNeoB.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SDSB";
+  src: url("/src/fonts/AppleSDGothicNeoSB.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SDEB";
+  src: url("/src/fonts/AppleSDGothicNeoEB.ttf") format("truetype");
+}

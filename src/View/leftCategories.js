@@ -5,6 +5,7 @@ import rectangleBox from "../image/Rectangle 3.png";
 import logo from "../image/Ellipse 1.png";
 import mainTitle from "../image/Eternal Library.png";
 import line1 from "../image/line1.png";
+import "./Fonts.css";
 
 const Title = styled.a`
   display: block;
@@ -13,21 +14,13 @@ const Title = styled.a`
 
   margin-top: 12px;
   font-size: 22px; // 폰트 사이즈 설정
-  @category_title {
-    font-family: "category_title";
-    src: url("../src/fonts/AppleSDGothicNeoB.ttf") format("truetype");
-  }
-  @category_others {
-    font-family: "category_others";
-    src: url("../src/fonts/AppleSDGothicNeoSB.ttf") format("truetype");
-  }
 
   // selected prop에 따라 스타일을 변경
   ${(props) =>
     props.selected &&
     `
     color: white;
-    font-family: category_title;
+    font-family: SDB;
     weight: 700;
     line-height: 41px;
     background-image: url(${rectangleBox});
@@ -41,7 +34,7 @@ const Title = styled.a`
     weight: 600;
     
     line-height: 41px;
-    font-family: category_others;
+    font-family: SDSB;
   `}
 `;
 
