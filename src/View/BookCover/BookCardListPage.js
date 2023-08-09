@@ -29,7 +29,7 @@ function BookCardListPage() {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div style={{ paddingLeft: '100px' }}>
+        <div style={{ position: 'absolute', left: '89.5px', top: '235px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '66px', width: '1324px', height: '947px' }}>
                 {currentData.map((book, index) => <BookCard key={index} book={book}></BookCard>)}
             </div>

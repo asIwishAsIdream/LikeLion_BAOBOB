@@ -17,12 +17,14 @@ const Container = styled.div`
 
 const Divider = styled.span`
   margin: 0 5px;
-  margin-top: 70px;
+  margin-top: 13px;
   color: #808080f;
 `;
 
 const RightSection = styled.div`
-  margin-left: 540px;
+  position: absolute;
+  left: 960.5px;
+  top: 70px;
   display: flex;
   gap: 15px;
 `;
@@ -35,9 +37,9 @@ const ScrollContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  margin-left: 114.5px;
-  top: 173px;
-  width: 1345px;
+  left: 66.5px; // 가로 위치
+  top: 148px; // 세로 위치
+  width: 1391px;
 `;
 
 const ScrollButton = styled.button`
@@ -53,18 +55,20 @@ const ScrollButton = styled.button`
     if (props.direction === "left") {
       return `
                 background-image: url(${left_arrow});
+                position: absolute;
                 width: 25px; // 따옴표 제거
                 height: 25px; // 따옴표 제거
-                left:402px;
-                top:173px;
+                left:47.5px;
+                top:147px;
             `;
     } else {
       return `
                 background-image: url(${right_arrow});
+                position: absolute;
                 width: 25px; // 따옴표 제거
                 height: 24px; // 따옴표 제거
-                left:1752px;
-                top:173px;
+                left:1469.5px;
+                top:148px;
             `;
     }
   }}
@@ -124,8 +128,8 @@ function BasicPageForm({ title }) {
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-        scrollContainerRef.current.scrollWidth -
-          scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.scrollWidth -
+      scrollContainerRef.current.clientWidth
     );
   };
 
@@ -133,7 +137,7 @@ function BasicPageForm({ title }) {
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-        scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.clientWidth
     );
   }, []);
 

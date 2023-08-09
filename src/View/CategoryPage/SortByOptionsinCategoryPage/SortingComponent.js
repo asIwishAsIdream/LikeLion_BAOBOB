@@ -3,9 +3,10 @@ import Dropdown from './Dropdown';
 import styled from 'styled-components';
 
 const SortingContainer = styled.div`
+    position: absolute; // 고정 위치를 위해 absolute 또는 fixed를 사용
+    left: 1312px; // 가로 위치
+    top: 196px; // 세로 위치
     text-align: right;
-    margin-right: 60px;
-    margin-top: 48px;
     font-family: "'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif";
 
 `

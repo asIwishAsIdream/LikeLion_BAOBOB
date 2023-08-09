@@ -2,7 +2,7 @@ import React from 'react';
 
 function BookCard({ book }) {
     return (
-        <div style={{ width: '188px', padding: '10px', margin: '10px', textAlign: 'left' }}>
+        <div style={{ width: '188px', padding: '8px', margin: '5px', textAlign: 'left' }}>
             <img src={book.image} alt={book.title} style={{ width: '188px', height: '282.99px' }} />
             <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '7px' }}>
                 <span style={{ border: '1px solid skyblue', color: 'skyblue', marginRight: '10px', width: '60px', height: '25px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{book.expirationYear}</span>
