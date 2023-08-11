@@ -7,7 +7,7 @@ const SortingContainer = styled.div`
     left: 1312px; // 가로 위치
     top: 196px; // 세로 위치
     text-align: right;
-    font-family: "'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif";
+    font-family: "SDB";
 
 `
 

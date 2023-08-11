@@ -8,7 +8,7 @@ const MyPage = styled.a`
     font-family:'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif; // 폰트 설정
     color: #808080;
     text-decoration: none; // 밑줄 삭제
-
+    font-family: "SDB";
 
     
     &:hover, &:active, &:visited, &:focus {

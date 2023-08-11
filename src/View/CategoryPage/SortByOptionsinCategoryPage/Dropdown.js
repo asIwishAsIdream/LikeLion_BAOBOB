@@ -19,7 +19,7 @@ function Dropdown({ options, selectedOption, onOptionSelect }) {
       fontWeight: state.isFocused ? "500" : "100",
       fontSize: "16px",
       fontFamily:
-        "'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif",
+        "SDB",
       cursor: "pointer",
     }),
     control: (provided) => ({

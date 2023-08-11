@@ -11,8 +11,7 @@ const Title = styled.header`
   align-items: left;
   font-size: 35px;
   font-weight: 700;
-  font-family: "Apple SD Gothic Neo M", "Noto Sans KR", "Bagel Fat One",
-    sans-serif; // 폰트 설정
+  font-family: "SDB";
 `;
 
 function HeadTitle({ title }) {

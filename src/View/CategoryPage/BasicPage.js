@@ -5,23 +5,31 @@ import SearchBar from "./SearchBar";
 import MyPageTag from "./MyPage";
 import LoginAndLogout from "./LoginLogout";
 import SmallCategoryBar from "./SmallCategoryBar";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import SortComponent from "./SortByOptionsinCategoryPage/SortingComponent";
 import right_arrow from "../../image/right_arrow_small_category.png";
 import left_arrow from "../../image/left_arrow_small_category.png";
+import BookList from "./BookList";
+import "../../View/Fonts.css";
+
+// 임시
+import jsonData from './json.json';
+
 
 const Container = styled.div`
+  font-family: "SDB";
   display: flex;
   align-items: center;
 `;
 
 const Divider = styled.span`
+
   margin: 0 5px;
   margin-top: 13px;
   color: #808080f;
 `;
 
 const RightSection = styled.div`
+  font-family: "SDB";
   position: absolute;
   left: 960.5px;
   top: 70px;
@@ -30,6 +38,7 @@ const RightSection = styled.div`
 `;
 
 const ScrollContainer = styled.div`
+  font-family: "SDB";
   display: flex;
   position: absolute;
   overflow-x: auto;
@@ -75,44 +84,12 @@ const ScrollButton = styled.button`
 `;
 
 function BasicPageForm({ title }) {
-  const small_category_title = [
-    "전체",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-  ];
+  // POST 요청 필요
+
+
+  const categories = ["전체", "사회", "교육", "공학", "자연", "의약", "예체능", "융복합"];
+  const small_category_title = Array(5).fill(categories).flat();
+
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -178,6 +155,7 @@ function BasicPageForm({ title }) {
       <div>
         <SortComponent />
       </div>
+      <BookList></BookList>
     </div>
   );
 }

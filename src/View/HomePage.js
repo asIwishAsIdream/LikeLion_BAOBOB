@@ -1,18 +1,7 @@
 // HomePage.js
 import React, { useState } from "react";
 import CategoryListLeft from "./leftCategories";
-import {
-  WeeklyPopularBooks,
-  HumanitiesBooks,
-  Arts_SportsBooks,
-  ConvergenceBooks,
-  SocietyBooks,
-  NatureBooks,
-  MedicineBooks,
-  EducationBooks,
-  EngineeringBooks,
-  CustomerService,
-} from "./MBooksCategory"; // index.js를 사용해서 이렇게 됨
+import BasicPageForm from './CategoryPage/BasicPage';
 import logo from "../image/Ellipse 1.png";
 import mainTitle from "../image/Eternal Library.png";
 import line1 from "../image/line1.png";
@@ -28,19 +17,6 @@ function HomePage() {
     "예체능",
     "융복합",
   ];
-  // 카테고리 선택을 위한 Dictionary
-  const categoryComponentMap = {
-    "주간 인기 책": WeeklyPopularBooks,
-    인문: HumanitiesBooks,
-    교육: EducationBooks, // 오타 수정(EducationBoosk -> EducationBooks)
-    사회: SocietyBooks,
-    공학: EngineeringBooks,
-    자연: NatureBooks,
-    의약: MedicineBooks,
-    예체능: Arts_SportsBooks,
-    융복합: ConvergenceBooks,
-    고객센터: CustomerService, // 예시로 추가
-  };
 
   // Add a state for the selected category
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
@@ -82,7 +58,8 @@ function HomePage() {
           <img
             src={logo}
             alt="logo"
-            style={{ position: "absolute", left: 85, top: 43 }}
+            onClick={handleLogoClick}
+            style={{ position: "absolute", left: 85, top: 43, cursor: "pointer" }}
           />
 
           <img
@@ -168,9 +145,7 @@ function HomePage() {
           width: "100%",
         }}
       >
-        {React.createElement(categoryComponentMap[selectedCategory], {
-          title: selectedCategory,
-        })}
+        <BasicPageForm title={selectedCategory}></BasicPageForm>
       </div>
 
       {/* 오른쪽 화면 관련 코드 */}

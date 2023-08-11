@@ -7,7 +7,7 @@ const Login_Logout = styled.a`
     color: #808080;
     text-decoration: none; // 밑줄 삭제
     margin-top: 13px;
-
+    font-family: "SDB";
     &:hover, &:active, &:visited, &:focus {
         color: gray; // 클릭 시나 호버 시 색상 변경 없음
         
