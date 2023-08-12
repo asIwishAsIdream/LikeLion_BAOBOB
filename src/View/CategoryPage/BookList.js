@@ -6,6 +6,7 @@ function BookCardListPage() {
     // jsonData를 bookData 형식에 맞게 변환
     const transformedData = jsonData.map(book => ({
         image: book.book_cover.book_cover,
+        book_id: book.book_id,
         title: book.book_name,
         author: book.author,
         expiration: "기증", // 이 정보는 jsonData에 없으므로 임시로 기입했습니다.
