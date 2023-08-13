@@ -1,22 +1,10 @@
 // HomePage.js
 import React, { useState } from "react";
-import CategoryListLeft from "./leftCategories";
 import BasicPageForm from "./CategoryPage/BasicPage";
-import LeftCategories from "./LeftCategories";
-import BookInfo from "./BookInfo";
+import LeftCategories from "./leftCategories";
+import BookInfo from "./bookInfo";
 
 function HomePage() {
-  const category_title = [
-    "인문",
-    "사회",
-    "교육",
-    "공학",
-    "자연",
-    "의약",
-    "예체능",
-    "융복합",
-  ];
-
   // Add a state for the selected category
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
 
@@ -37,7 +25,6 @@ function HomePage() {
           top: 0,
         }}
       >
-        <BasicPageForm title={selectedCategory}></BasicPageForm>
         <BookInfo />
       </div>
 
