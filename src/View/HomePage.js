@@ -1,33 +1,24 @@
 // HomePage.js
 import React, { useState } from "react";
-import {
-  WeeklyPopularBooks,
-  HumanitiesBooks,
-  Arts_SportsBooks,
-  ConvergenceBooks,
-  SocietyBooks,
-  NatureBooks,
-  MedicineBooks,
-  EducationBooks,
-  EngineeringBooks,
-  CustomerService,
-} from "./MBooksCategory"; // index.js를 사용해서 이렇게 됨
+import CategoryListLeft from "./leftCategories";
+import BasicPageForm from "./CategoryPage/BasicPage";
 import LeftCategories from "./LeftCategories";
 import BookInfo from "./BookInfo";
 
 function HomePage() {
-  const categoryComponentMap = {
-    "주간 인기 책": WeeklyPopularBooks,
-    인문: HumanitiesBooks,
-    교육: EducationBooks, // 오타 수정(EducationBoosk -> EducationBooks)
-    사회: SocietyBooks,
-    공학: EngineeringBooks,
-    자연: NatureBooks,
-    의약: MedicineBooks,
-    예체능: Arts_SportsBooks,
-    융복합: ConvergenceBooks,
-    고객센터: CustomerService, // 예시로 추가
-  }; // Add a state for the selected category
+  const category_title = [
+    "인문",
+    "사회",
+    "교육",
+    "공학",
+    "자연",
+    "의약",
+    "예체능",
+    "융복합",
+  ];
+
+  // Add a state for the selected category
+  const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
 
   // Handler for category selection
   // 여기서 category는 임시 변수로 클릭이 발생했을 때 생긴다, 그리고 클릭시 클릭된 컴포넌트의 이름이 인자로 전달된다
@@ -46,6 +37,7 @@ function HomePage() {
           top: 0,
         }}
       >
+        <BasicPageForm title={selectedCategory}></BasicPageForm>
         <BookInfo />
       </div>
 

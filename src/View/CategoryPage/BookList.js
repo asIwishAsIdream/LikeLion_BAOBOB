@@ -1,35 +1,28 @@
 import React, { useState } from 'react';
-import BasicPageForm from '../CategoryPage/BasicPage';
-import BookCard from '../BookCover/BaseBookCover';
+import jsonData from './json.json';
+import BookCard from './BaseBookCover';
 
 function BookCardListPage() {
-    // 임시 데이터 생성
-    const bookData = Array(10).fill({
-        image: '/book_EX.jpg',
-        title: "노인과바다",
-        author: "최낙현",
-        expiration: "기증",
-        expirationYear: '2023',
-        rating: 4.5 // 임시 평점
-    });
+    // jsonData를 bookData 형식에 맞게 변환
+    const transformedData = jsonData.map(book => ({
+        image: book.book_cover.book_cover,
+        book_id: book.book_id,
+        title: book.book_name,
+        author: book.author,
+        expiration: "기증", // 이 정보는 jsonData에 없으므로 임시로 기입했습니다.
+        expirationYear: book.publication_year,
+        rating: book.average_rating
+    }));
 
-    // 현재 페이지 상태
     const [currentPage, setCurrentPage] = useState(1);
-
-    // 페이지당 보여줄 카드 수
     const cardsPerPage = 10;
+    const totalPages = Math.ceil(transformedData.length / cardsPerPage);
+    const currentData = transformedData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage);
 
-    // 총 페이지 수
-    const totalPages = Math.ceil(bookData.length / cardsPerPage);
-
-    // 현재 페이지에 보여줄 데이터
-    const currentData = bookData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage);
-
-    // 페이지 이동 함수
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div style={{ paddingLeft: '100px' }}>
+        <div style={{ position: 'absolute', left: '89.5px', top: '235px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '66px', width: '1324px', height: '947px' }}>
                 {currentData.map((book, index) => <BookCard key={index} book={book}></BookCard>)}
             </div>
