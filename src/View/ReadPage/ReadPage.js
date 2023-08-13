@@ -9,6 +9,7 @@ import downArrow from '../../image/down_arrow.png';
 import leftArrow from '../../image/leftArrow.png';
 import logo from "../../image/Group 93.png";
 import bookmark from "../../image/bookmarks_simple_fill_icon.png";
+import CommentComponent from './Comment';
 import './ReadPage.css';
 
 function ReadPage() {
@@ -18,58 +19,32 @@ function ReadPage() {
     const [openedSection, setOpenedSection] = useState('comment'); // 댓글 섹션을 처음에 보이게 설정
 
 
-
-    useEffect(() => {
-        const handleMouseUp = () => {
-            const selection = window.getSelection();
-            const range = selection.getRangeAt(0);
-
-            if (selectedIcon === 'pencil' && !range.collapsed) {
-                const span = document.createElement('span');
-                span.classList.add('highlighted');
-                range.surroundContents(span);
-                selection.removeAllRanges();
-            } else if (selectedIcon === 'eraser' && !range.collapsed) {
-                const spans = document.querySelectorAll(".highlighted");
-
-                spans.forEach(span => {
-                    if (range.intersectsNode(span)) {
-                        const parent = span.parentNode;
-                        while (span.firstChild) {
-                            parent.insertBefore(span.firstChild, span);
-                        }
-                        parent.removeChild(span);
-                    }
-                });
-                selection.removeAllRanges();
-            }
-        };
-
-        document.addEventListener('mouseup', handleMouseUp);
-
-        return () => {
-            document.removeEventListener('mouseup', handleMouseUp);
-        }
-    }, [selectedIcon]);
-
     return (
         <div style={{ background: '#DBDBDB', overflowY: 'hidden' }}>
             <img src={logo} style={{ position: 'absolute', top: '57px', left: '148px' }} />
-            {/* 글부분 */}
+
             <div style={{
                 position: 'absolute',
                 top: '151px',
                 left: '148px',
                 overflowY: 'scroll',
-                maxHeight: 'calc(100vh - 153px)', // 2px를 빼줌
+                maxHeight: '1025px', // 2px를 빼줌
                 width: '1116px',
                 fontFamily: 'SDB',
                 borderTop: '2px solid #DBDBDB',
                 borderRight: '2px solid #DBDBDB',
                 borderLeft: '2px solid #DBDBDB',
+                borderBottom: '2px solid #DBDBDB',
                 borderRadius: '5px'
             }}>
-                <div style={{ position: 'fixed', top: '153px', width: '1116px', height: '172px', background: '#FFFFFF' }}>
+                {/* 제목 박스 내부 글부분 */}
+                <div style={{
+                    position: 'sticky',
+                    top: '0px',
+                    width: '1116px',
+                    height: '172px',
+                    background: '#FFFFFF'
+                }}>
                     <img src={leftArrow} alt="Left Arrow" style={{ position: 'absolute', left: '33px', top: '47px', width: '40px', height: '40px' }} />
                     <div style={{ position: 'absolute', left: '105px', top: '45px', fontSize: '40px', fontWeight: 700, lineHeight: '48px' }}>
                         {"운수 좋은 날"}
@@ -126,7 +101,7 @@ function ReadPage() {
                     />
                 </div>
                 {openedSection === 'reference' && (
-                    <div style={{ background: '#DBDBDB', width: '100%', height: '403px', margin: '10px 0' }}
+                    <div
                         className="animated-section">
                         {/* 원하는 요소들을 이곳에 추가 */}
                     </div>
@@ -143,8 +118,9 @@ function ReadPage() {
                     />
                 </div>
                 {openedSection === 'comment' && (
-                    <div style={{ background: '#DBDBDB', width: '100%', height: '403px', margin: '10px 0' }}>
+                    <div style={{ margin: '10px 0', marginTop: '30px' }}>
                         {/* 원하는 요소들을 이곳에 추가 */}
+                        <CommentComponent page={1} nickname="UserNickname"></CommentComponent>
                     </div>
                 )}
 
