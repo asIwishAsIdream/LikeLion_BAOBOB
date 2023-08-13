@@ -14,14 +14,6 @@ const Title = styled.a`
 
   margin-top: 12px;
   font-size: 22px; // 폰트 사이즈 설정
-  @category_title {
-    font-family: "category_title";
-    src: url("../src/fonts/AppleSDGothicNeoB.ttf") format("truetype");
-  }
-  @category_others {
-    font-family: "category_others";
-    src: url("../src/fonts/AppleSDGothicNeoSB.ttf") format("truetype");
-  }
 
   // selected prop에 따라 스타일을 변경
   ${(props) =>
