@@ -5,18 +5,23 @@ import LeftCategories from "./leftCategories";
 import BookInfo from "./bookInfo";
 
 function HomePage() {
-  // Add a state for the selected category
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
+  const [selectedBookId, setSelectedBookId] = useState(null);
 
-  // Handler for category selection
-  // 여기서 category는 임시 변수로 클릭이 발생했을 때 생긴다, 그리고 클릭시 클릭된 컴포넌트의 이름이 인자로 전달된다
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setSelectedBookId(null);  // Reset selected book when changing category
+  }
+
+  const handleBookClick = (bookId) => {
+    console.log("in");
+    setSelectedBookId(bookId);
+  }
 
   return (
     <div style={{ height: "1024px", width: "1920px" }}>
-      {/* 왼쪽 카테고리 리스트 관련 코드 */}
-      <LeftCategories />
+      <LeftCategories onCategoryChange={handleCategoryChange} />
 
-      {/* 오른쪽 화면 관련 코드 */}
       <div
         style={{
           position: "absolute",
@@ -25,10 +30,8 @@ function HomePage() {
           top: 0,
         }}
       >
-        <BookInfo />
+        {selectedBookId ? <BookInfo bookId={selectedBookId} /> : <BasicPageForm title={selectedCategory} onBookClick={handleBookClick} />}
       </div>
-
-      {/* 오른쪽 화면 관련 코드 */}
     </div>
   );
 }

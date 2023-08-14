@@ -25,7 +25,7 @@ const Divider = styled.span`
 
   margin: 0 5px;
   margin-top: 13px;
-  color: #808080f;
+  color: #808080;
 `;
 
 const RightSection = styled.div`
@@ -83,7 +83,7 @@ const ScrollButton = styled.button`
   }}
 `;
 
-function BasicPageForm({ title }) {
+function BasicPageForm({ title, onBookClick }) {
   // POST 요청 필요
 
 
@@ -155,7 +155,7 @@ function BasicPageForm({ title }) {
       <div>
         <SortComponent />
       </div>
-      <BookList></BookList>
+      <BookList onBookClick={onBookClick} ></BookList>
     </div>
   );
 }

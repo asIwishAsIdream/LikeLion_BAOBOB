@@ -38,7 +38,7 @@ const Title = styled.a`
   `}
 `;
 
-function LeftCategories() {
+function LeftCategories({ onCategoryChange }) {
   const category_title = [
     "인문",
     "사회",
@@ -55,12 +55,13 @@ function LeftCategories() {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    console.log(category);
+    onCategoryChange(category); // <-- 카테고리 변경 시 부모 컴포넌트에 알림
   };
 
   const handleLogoClick = (e) => {
     e.preventDefault(); // Prevent the default link click action
     handleCategoryClick("주간 인기 책");
+    onCategoryChange("주간 인기 책");
   };
 
   return (
@@ -86,8 +87,9 @@ function LeftCategories() {
         >
           <img
             src={logo}
+            onClick={handleLogoClick}
             alt="logo"
-            style={{ position: "absolute", left: 85, top: 43 }}
+            style={{ position: "absolute", left: 85, top: 43, cursor: "pointer" }}
           />
 
           <img
