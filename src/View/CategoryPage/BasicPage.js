@@ -2,14 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import HeadTitle from "./HeadTitle";
 import SearchBar from "./SearchBar";
-import MyPageTag from "./MyPage";
+import MyPageTag from "./MyPageText";
 import Login_ from "./Login";
 import SmallCategoryBar from "./SmallCategoryBar";
+import SignUp from "./SignUpText";
+import LoginPage from "../LoginMyPageEtc/LoginPage";
+
 import SortComponent from "./SortByOptionsinCategoryPage/SortingComponent";
 import right_arrow from "../../image/right_arrow_small_category.png";
 import left_arrow from "../../image/left_arrow_small_category.png";
 import BookList from "./BookList";
-import LoginPage from "../LoginMyPageEtc/LoginPage";
 
 import "../../View/Fonts.css";
 
@@ -32,6 +34,7 @@ const RightSection = styled.div`
   position: absolute;
   left: 960.5px;
   top: 70px;
+  cursor: pointer;
   display: flex;
   gap: 15px;
 `;
@@ -141,9 +144,18 @@ function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus 
           </div>
           <RightSection>
             <SearchBar />
-            <Login_ onClick={handleLoginClick} />
-            <Divider>|</Divider>
-            <MyPageTag />
+            {isLoggedIn ? (
+              <>
+                <MyPageTag />
+                <Logout />
+              </>
+            ) : (
+              <>
+                <Login_ onClick={handleLoginClick} />
+                <Divider>|</Divider>
+                <SignUp />
+              </>
+            )}
           </RightSection>
         </Container>
         <ScrollButton

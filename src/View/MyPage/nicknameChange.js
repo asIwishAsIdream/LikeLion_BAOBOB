@@ -1,5 +1,5 @@
-import nickname from "../../image/nickname.png";
-import nicknamechange from "../../image/nicknamechange.png";
+import nickname from "../../image/nicknameText.png";
+import nicknamechange from "../../image/nickname_change.png";
 import check_nickname from "../../image/check_nickname.png";
 import RectangleNick from "../../image/RectangleNick.png";
 import inputing from "../../image/inputing.png";

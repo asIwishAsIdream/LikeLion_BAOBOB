@@ -8,11 +8,12 @@ const Login = styled.a`
     text-decoration: none; // 밑줄 삭제
     margin-top: 13px;
     font-family: "SDB";
+    cursor:'pointer';
     &:hover, &:active, &:visited, &:focus {
         color: gray; // 클릭 시나 호버 시 색상 변경 없음
         
     }
-    cursor:'pointer';
+    
 `;
 
 function Login_({ onClick }) {
