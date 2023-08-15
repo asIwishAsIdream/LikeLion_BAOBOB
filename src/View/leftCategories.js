@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import rectangleBox from "../image/Rectangle 3.png";
 
-import logo from "../image/Ellipse 1.png";
+import logo from "../image/Group 155.png";
 import mainTitle from "../image/Eternal Library.png";
 import line1 from "../image/line1.png";
 import "./Fonts.css";
@@ -62,7 +62,7 @@ function LeftCategories({ onCategoryChange, onLogoClick }) {
     e.preventDefault(); // Prevent the default link click action
     handleCategoryClick("주간 인기 책");
     onCategoryChange("주간 인기 책");
-    if (onLogoClick) onLogoClick();  // 추가된 부분: HomePage.js의 상태를 초기화하는 콜백 함수 호출
+    if (onLogoClick) onLogoClick(); // 추가된 부분: HomePage.js의 상태를 초기화하는 콜백 함수 호출
   };
 
   return (
@@ -90,13 +90,12 @@ function LeftCategories({ onCategoryChange, onLogoClick }) {
             src={logo}
             onClick={handleLogoClick}
             alt="logo"
-            style={{ position: "absolute", left: 85, top: 43, cursor: "pointer" }}
-          />
-
-          <img
-            src={mainTitle}
-            alt="Eternal Library"
-            style={{ position: "absolute", left: 57, top: 152 }}
+            style={{
+              position: "absolute",
+              left: 38,
+              top: 0,
+              cursor: "pointer",
+            }}
           />
         </div>
 
