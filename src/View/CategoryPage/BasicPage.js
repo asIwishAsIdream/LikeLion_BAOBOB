@@ -83,7 +83,7 @@ const ScrollButton = styled.button`
   }}
 `;
 
-function BasicPageForm({ title, onBookClick }) {
+function BasicPageForm({ bookId, title, onBookClick }) {
   // POST 요청 필요
 
 
