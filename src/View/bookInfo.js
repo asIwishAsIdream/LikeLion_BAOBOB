@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 import "./Fonts.css";
 import BackArrow from "../image/back_arraw.png";
 import Published_2023 from "../image/published_2023.png";
@@ -12,12 +13,27 @@ import Raising from "../image/raising.png";
 import "./ScrollBar.css";
 
 function BookInfo() {
+
+  const { bookId } = useParams();
+  const navigate = useNavigate();  // useNavigate hook 사용
+
+  // 뒤로 가기 함수 정의
+  const handleGoBack = () => {
+    navigate(-1);  // 이전 페이지로 이동
+  };
+
+  const handleReadClick = () => {
+    navigate(`/read/${bookId}`);
+  };
+
   return (
     <div style={{ height: "1024px", width: "1615px" }}>
       <img
         src={BackArrow}
         alt="BackArrow"
-        style={{ position: "absolute", left: 377 - 305, top: 78 }}
+        style={{ position: "absolute", left: 377 - 305, top: 78, cursor: 'pointer' }}
+        onClick={handleGoBack}
+
       />
       <div
         style={{
@@ -218,7 +234,9 @@ function BookInfo() {
       <img
         src={ReadButton}
         alt="ReadButton"
-        style={{ position: "absolute", left: 1629 - 305, top: 840 }}
+        style={{ position: "absolute", left: 1629 - 305, top: 840, cursor: "pointer" }}
+        onClick={handleReadClick}
+
       />
     </div>
   );

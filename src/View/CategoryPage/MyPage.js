@@ -1,25 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'; // Link 컴포넌트를 import
 
 // Search Box Component
-const MyPage = styled.a`
+const MyPage = styled(Link)`
     margin-top: 13px;
     margin-left: 13px;
-    font-family:'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif; // 폰트 설정
+    font-family:'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif;
     color: #808080;
-    text-decoration: none; // 밑줄 삭제
+    text-decoration: none;
     font-family: "SDB";
 
-    
     &:hover, &:active, &:visited, &:focus {
-        color: gray; // 클릭 시나 호버 시 색상 변경 없음
-        
+        color: gray;
     }
 `;
 
-
 function MyPageTag() {
-    return <MyPage href='#' >마이페이지</MyPage>;
+    return <MyPage to='/user/mypage' >마이페이지</MyPage>; // href 대신 to prop를 사용
 }
 
 export default MyPageTag;
