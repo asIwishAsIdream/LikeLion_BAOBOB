@@ -15,7 +15,6 @@ function App() {
           <Route path="/book/:bookId" element={<BookInfo />} />
           <Route path="/read/:bookId" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
-          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>
