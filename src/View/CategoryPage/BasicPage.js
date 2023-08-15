@@ -15,7 +15,6 @@ import BookList from "./BookList";
 
 import "../../View/Fonts.css";
 
-
 const Container = styled.div`
   font-family: "SDB";
   display: flex;
@@ -23,7 +22,6 @@ const Container = styled.div`
 `;
 
 const Divider = styled.span`
-
   margin: 0 5px;
   margin-top: 13px;
   color: #808080;
@@ -85,11 +83,25 @@ const ScrollButton = styled.button`
   }}
 `;
 
-function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus }) {
+function BasicPageForm({
+  bookId,
+  title,
+  onBookClick,
+  isLoggedIn,
+  setLoginStatus,
+}) {
   // POST 요청 필요
 
-
-  const categories = ["전체", "사회", "교육", "공학", "자연", "의약", "예체능", "융복합"];
+  const categories = [
+    "전체",
+    "사회",
+    "교육",
+    "공학",
+    "자연",
+    "의약",
+    "예체능",
+    "융복합",
+  ];
   const small_category_title = Array(5).fill(categories).flat();
 
   const scrollContainerRef = useRef(null);
@@ -102,21 +114,20 @@ function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus 
 
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLoginClick = () => {
-    setLoginStatus(true);  // 여기서 HomePage.js의 로그인 상태를 변경
-  }
+    setLoginStatus(true); // 여기서 HomePage.js의 로그인 상태를 변경
+  };
 
   const selectCategory = (index) => {
     setSelectedCategoryIndex(index);
   };
-
 
   const handleScroll = (scrollOffset) => {
     scrollContainerRef.current.scrollLeft += scrollOffset;
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-      scrollContainerRef.current.scrollWidth -
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.scrollWidth -
+          scrollContainerRef.current.clientWidth
     );
   };
 
@@ -124,19 +135,14 @@ function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus 
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.clientWidth
     );
   }, []);
 
   if (isLoggedIn) {
-
     return <LoginPage />;
-  }
-
-  else {
-
+  } else {
     return (
-
       <div>
         <Container>
           <div>
@@ -147,7 +153,7 @@ function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus 
             {isLoggedIn ? (
               <>
                 <MyPageTag />
-                <Logout />
+                {/* <Logout /> */}
               </>
             ) : (
               <>
@@ -182,7 +188,7 @@ function BasicPageForm({ bookId, title, onBookClick, isLoggedIn, setLoginStatus 
         <div>
           <SortComponent />
         </div>
-        <BookList onBookClick={onBookClick} ></BookList>
+        <BookList onBookClick={onBookClick}></BookList>
       </div>
     );
   }
