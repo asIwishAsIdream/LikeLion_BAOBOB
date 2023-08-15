@@ -38,7 +38,7 @@ const Title = styled.a`
   `}
 `;
 
-function LeftCategories({ onCategoryChange }) {
+function LeftCategories({ onCategoryChange, onLogoClick }) {
   const category_title = [
     "인문",
     "사회",
@@ -62,6 +62,7 @@ function LeftCategories({ onCategoryChange }) {
     e.preventDefault(); // Prevent the default link click action
     handleCategoryClick("주간 인기 책");
     onCategoryChange("주간 인기 책");
+    if (onLogoClick) onLogoClick();  // 추가된 부분: HomePage.js의 상태를 초기화하는 콜백 함수 호출
   };
 
   return (

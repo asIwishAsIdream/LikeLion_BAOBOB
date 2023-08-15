@@ -10,6 +10,7 @@ import axios from 'axios';
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [selectedBookId, setSelectedBookId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // 데이터 가져오기
   const [data, setData] = useState(null);
@@ -64,9 +65,15 @@ function HomePage() {
     setSelectedBookId(bookId);
   }
 
+  const resetToInitialState = () => {
+    setSelectedBookId(null);
+    setSelectedCategory("주간 인기 책");
+    setIsLoggedIn(false);  // 로그인 상태 초기화
+  };
+
   return (
     <div style={{ height: "1024px", width: "1920px" }}>
-      <LeftCategories onCategoryChange={handleCategoryChange} />
+      <LeftCategories onCategoryChange={handleCategoryChange} onLogoClick={resetToInitialState} /> {/* onLogoClick prop 전달 */}
 
       <div
         style={{
@@ -77,7 +84,12 @@ function HomePage() {
         }}
       >
 
-        {selectedBookId ? <BookInfo bookId={selectedBookId} /> : <BasicPageForm title={selectedCategory} onBookClick={handleBookClick} />}
+        {selectedBookId ? <BookInfo bookId={selectedBookId} /> : <BasicPageForm
+          title={selectedCategory}
+          onBookClick={handleBookClick}
+          isLoggedIn={isLoggedIn}
+          setLoginStatus={setIsLoggedIn} />}
+
         <form onSubmit={fetchDataPOST}>
           {data && <textarea rows={15} value={JSON.stringify(data, null, 2)} readOnly={true} />}
           {loginData && <textarea rows={15} value={JSON.stringify(loginData, null, 2)} readOnly={true} />}
