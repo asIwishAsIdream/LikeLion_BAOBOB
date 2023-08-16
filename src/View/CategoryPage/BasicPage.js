@@ -92,7 +92,7 @@ function BasicPageForm({
   isLoggedIn,
   setLoginStatus,
   isClickedSignUp,
-  setClickedSignUp
+  setClickedSignUp,
 }) {
   // POST 요청 필요
 
@@ -116,7 +116,6 @@ function BasicPageForm({
   // 로그인 임시 여부
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
-
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLoginClick = () => {
     setIsLoginClicked(true); // 여기서 HomePage.js의 로그인 상태를 변경
@@ -136,8 +135,8 @@ function BasicPageForm({
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-      scrollContainerRef.current.scrollWidth -
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.scrollWidth -
+          scrollContainerRef.current.clientWidth
     );
   };
 
@@ -145,17 +144,28 @@ function BasicPageForm({
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.clientWidth
     );
   }, []);
 
   if (isLoginClicked) {
-    return <LoginPage isLoggedIn={isLoggedIn} setIsLoginClicked={setIsLoginClicked} setLoginStatus={setLoginStatus} />;
-  }
-  else if (isClickedSignUp) {
-    return <SignUpPage isLoggedIn={isLoggedIn} setLoginStatus={setLoginStatus} setClickedSignUp={setClickedSignUp} setIsLoginClicked={setIsLoginClicked} />;
-  }
-  else {
+    return (
+      <LoginPage
+        isLoggedIn={isLoggedIn}
+        setIsLoginClicked={setIsLoginClicked}
+        setLoginStatus={setLoginStatus}
+      />
+    );
+  } else if (isClickedSignUp) {
+    return (
+      <SignUpPage
+        isLoggedIn={isLoggedIn}
+        setLoginStatus={setLoginStatus}
+        setClickedSignUp={setClickedSignUp}
+        setIsLoginClicked={setIsLoginClicked}
+      />
+    );
+  } else {
     return (
       <div>
         <Container>
