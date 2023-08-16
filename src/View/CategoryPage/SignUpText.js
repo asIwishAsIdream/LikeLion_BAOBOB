@@ -16,8 +16,8 @@ const SignUp_ = styled(Link)`
     }
 `;
 
-function SignUp({ onClick }) {
-    return <SignUp_ onClick={onClick}>회원가입</SignUp_>; // href 대신 to prop를 사용
+function SignUp() {
+    return <SignUp_ to={'/signupage'} >회원가입</SignUp_>; // href 대신 to prop를 사용
 }
 
 export default SignUp;
