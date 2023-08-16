@@ -172,9 +172,9 @@ function BasicPageForm({
               </>
             ) : (
               <>
-                <Login_ onClick={handleLoginClick} />
+                <Login_ />
                 <Divider>|</Divider>
-                <SignUp onClick={handleSignUpClick} />
+                <SignUp />
               </>
             )}
           </RightSection>

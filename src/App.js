@@ -20,6 +20,7 @@ function App() {
           <Route path="/bookinfo/:bookid" element={<BookInfo />} />
           <Route path="/read/:bookid" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
+          <Route path="/loginpage/" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>
