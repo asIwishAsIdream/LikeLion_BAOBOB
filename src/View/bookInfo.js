@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import "./Fonts.css";
 import BackArrow from "../image/back_arraw.png";
 import Published_2023 from "../image/published_2023.png";
@@ -12,14 +12,31 @@ import HeartUnclicked from "../image/heart_unclicked.png";
 import Raising from "../image/raising.png";
 import "./ScrollBar.css";
 
+import axios from "axios";
+
+const book = {
+  book_id: 123,
+  mainCategory_id: 1,
+  subCategory_id: 2,
+  book_Name: "김남혁 자서전",
+  author: "천하제일김남혁",
+  is_popular: true,
+  publication_year: 2023,
+  views: 7777777777777,
+  like: 888888888,
+  average_rating: 5.5,
+  book_introduction: "text\n\ntext kiki\n",
+  book_status: "text",
+  created_at: "2021-05-01",
+};
+
 function BookInfo() {
-
   const { bookId } = useParams();
-  const navigate = useNavigate();  // useNavigate hook 사용
-
+  const navigate = useNavigate(); // useNavigate hook 사용
+  const [selectedIcon, setSelectedIcon] = useState(null);
   // 뒤로 가기 함수 정의
   const handleGoBack = () => {
-    navigate(-1);  // 이전 페이지로 이동
+    navigate(-1); // 이전 페이지로 이동
   };
 
   const handleReadClick = () => {
@@ -28,13 +45,6 @@ function BookInfo() {
 
   return (
     <div style={{ height: "1024px", width: "1615px" }}>
-      <img
-        src={BackArrow}
-        alt="BackArrow"
-        style={{ position: "absolute", left: 377 - 305, top: 78, cursor: 'pointer' }}
-        onClick={handleGoBack}
-
-      />
       <div
         style={{
           position: "absolute",
@@ -45,7 +55,7 @@ function BookInfo() {
           fontSize: "40px",
         }}
       >
-        죽음 : 이토록 가깝고 이토록 먼
+        {book.book_Name}
       </div>
       <div
         style={{
@@ -58,7 +68,7 @@ function BookInfo() {
           color: "#545454",
         }}
       >
-        블라디미르 장켈레비치
+        {book.author}
       </div>
 
       <div
@@ -77,101 +87,7 @@ function BookInfo() {
           textAlign: "left",
         }}
       >
-        1 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />2 남산 위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리
-        기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />3 가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴
-        일편단심일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />4 이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라
-        사랑하세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />1 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라
-        만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. <br />
-        <br />2 남산 위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리
-        기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />3 가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴
-        일편단심일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        <br />
-        <br />4 이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라
-        사랑하세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.1
-        동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세. 무궁화
-        삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 2 남산 위에 저
-        소나무, 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세. 3 가을 하늘 공활한데 높고
-        구름 없이 밝은 달은 우리 가슴 일편단심일세. 무궁화 삼천리 화려 강산 대한
-        사람, 대한으로 길이 보전하세. 4 이 기상과 이 맘으로 충성을 다하여
-        괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리 화려 강산 대한 사람,
-        대한으로 길이 보전하세.1 동해 물과 백두산이 마르고 닳도록 하느님이
-        보우하사 우리나라 만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이
-        보전하세. 2 남산 위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리
-        기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 3
-        가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 4 이 기상과
-        이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세.1 동해 물과 백두산이 마르고
-        닳도록 하느님이 보우하사 우리나라 만세. 무궁화 삼천리 화려 강산 대한
-        사람, 대한으로 길이 보전하세. 2 남산 위에 저 소나무, 철갑을 두른 듯 바람
-        서리 불변함은 우리 기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로
-        길이 보전하세. 3 가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴
-        일편단심일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        4 이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.1 동해 물과
-        백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세. 2 남산 위에 저 소나무,
-        철갑을 두른 듯 바람 서리 불변함은 우리 기상일세. 무궁화 삼천리 화려 강산
-        대한 사람, 대한으로 길이 보전하세. 3 가을 하늘 공활한데 높고 구름 없이
-        밝은 달은 우리 가슴 일편단심일세. 무궁화 삼천리 화려 강산 대한 사람,
-        대한으로 길이 보전하세. 4 이 기상과 이 맘으로 충성을 다하여 괴로우나
-        즐거우나 나라 사랑하세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이
-        보전하세.1 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라
-        만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 2 남산
-        위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세. 무궁화
-        삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 3 가을 하늘 공활한데
-        높고 구름 없이 밝은 달은 우리 가슴 일편단심일세. 무궁화 삼천리 화려 강산
-        대한 사람, 대한으로 길이 보전하세. 4 이 기상과 이 맘으로 충성을 다하여
-        괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리 화려 강산 대한 사람,
-        대한으로 길이 보전하세.1 동해 물과 백두산이 마르고 닳도록 하느님이
-        보우하사 우리나라 만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이
-        보전하세. 2 남산 위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리
-        기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 3
-        가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 4 이 기상과
-        이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세.1 동해 물과 백두산이 마르고
-        닳도록 하느님이 보우하사 우리나라 만세. 무궁화 삼천리 화려 강산 대한
-        사람, 대한으로 길이 보전하세. 2 남산 위에 저 소나무, 철갑을 두른 듯 바람
-        서리 불변함은 우리 기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로
-        길이 보전하세. 3 가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴
-        일편단심일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.
-        4 이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세.1 동해 물과
-        백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세. 2 남산 위에 저 소나무,
-        철갑을 두른 듯 바람 서리 불변함은 우리 기상일세. 무궁화 삼천리 화려 강산
-        대한 사람, 대한으로 길이 보전하세. 3 가을 하늘 공활한데 높고 구름 없이
-        밝은 달은 우리 가슴 일편단심일세. 무궁화 삼천리 화려 강산 대한 사람,
-        대한으로 길이 보전하세. 4 이 기상과 이 맘으로 충성을 다하여 괴로우나
-        즐거우나 나라 사랑하세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이
-        보전하세.1 동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라
-        만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 2 남산
-        위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세. 무궁화
-        삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 3 가을 하늘 공활한데
-        높고 구름 없이 밝은 달은 우리 가슴 일편단심일세. 무궁화 삼천리 화려 강산
-        대한 사람, 대한으로 길이 보전하세. 4 이 기상과 이 맘으로 충성을 다하여
-        괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리 화려 강산 대한 사람,
-        대한으로 길이 보전하세.1 동해 물과 백두산이 마르고 닳도록 하느님이
-        보우하사 우리나라 만세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이
-        보전하세. 2 남산 위에 저 소나무, 철갑을 두른 듯 바람 서리 불변함은 우리
-        기상일세. 무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 3
-        가을 하늘 공활한데 높고 구름 없이 밝은 달은 우리 가슴 일편단심일세.
-        무궁화 삼천리 화려 강산 대한 사람, 대한으로 길이 보전하세. 4 이 기상과
-        이 맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세. 무궁화 삼천리
-        화려 강산 대한 사람, 대한으로 길이 보전하세.
+        {book.book_introduction}
       </div>
 
       <img
@@ -206,19 +122,15 @@ function BookInfo() {
           fontSize: "25px",
         }}
       >
-        4.3
+        {book.average_rating}
       </div>
 
       <img
-        src={HeartUnclicked}
+        src={selectedIcon === "heartclicked" ? HeartClicked : HeartUnclicked}
         alt="heart_unclicked"
         style={{ position: "absolute", left: 1550 - 305, top: 852 }}
       />
-      <img
-        src={EmptyButton}
-        alt="EmptyButton"
-        style={{ position: "absolute", left: 1514 - 305, top: 840 }}
-      />
+
       <div
         style={{
           position: "absolute",
@@ -229,14 +141,39 @@ function BookInfo() {
           fontSize: "25px",
         }}
       >
-        3333
+        {book.like}
       </div>
+      <img
+        src={EmptyButton}
+        alt="EmptyButton"
+        style={{ position: "absolute", left: 1514 - 305, top: 840 }}
+        onClick={() => {
+          setSelectedIcon(
+            selectedIcon === "heartclicked" ? null : "heartclicked"
+          );
+        }}
+      />
       <img
         src={ReadButton}
         alt="ReadButton"
-        style={{ position: "absolute", left: 1629 - 305, top: 840, cursor: "pointer" }}
+        style={{
+          position: "absolute",
+          left: 1629 - 305,
+          top: 840,
+          cursor: "pointer",
+        }}
         onClick={handleReadClick}
-
+      />
+      <img
+        src={BackArrow}
+        alt="BackArrow"
+        style={{
+          position: "absolute",
+          left: 377 - 305,
+          top: 78,
+          cursor: "pointer",
+        }}
+        onClick={handleGoBack}
       />
     </div>
   );

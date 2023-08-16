@@ -1,5 +1,6 @@
 // ReadPage.js
 import React, { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import page1 from "../../image/1page.png";
 import pencil from "../../image/pencil_simple_line_fill_icon.png";
 import pencilBlue from "../../image/pencil_blue.png";
@@ -95,8 +96,11 @@ function deleteHigh() {
   canvas.requestRenderAll();
 }
 function ReadPage() {
-  const [selectedIcon, setSelectedIcon] = useState(null); // 'pencil' or 'eraser'
-
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const navigate = useNavigate(); // useNavigate hook 사용
+  const handleGoBack = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
   // 현재 열려있는 섹션을 나타내는 state (null, 'myComment', 'reference', 'comment')
   const [openedSection, setOpenedSection] = useState("comment"); // 댓글 섹션을 처음에 보이게 설정
 
@@ -165,6 +169,9 @@ function ReadPage() {
           top: "206px",
           width: "40px",
           height: "40px",
+        }}
+        onClick={() => {
+          handleGoBack();
         }}
       />
       <img
