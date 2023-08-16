@@ -12,3 +12,7 @@
   font-family: "SDEB";
   src: url("/src/fonts/AppleSDGothicNeoEB.ttf") format("truetype");
 }
+
+.center-aligned {
+  text-align: center;
+}
