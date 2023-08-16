@@ -1,4 +1,7 @@
 // App.js
+
+import React, { useState } from 'react';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from "./View/HomePage";
 import BookInfo from './View/bookInfo.js';  // bookinfo.js의 경로를 지정하세요
@@ -7,14 +10,17 @@ import MyPage from './View/MyPage/myPage';
 import LoginPage from './View/LoginMyPageEtc/LoginPage';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/book/:bookId" element={<BookInfo />} />
-          <Route path="/read/:bookId" element={<ReadPage />} />
+          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} setLoginStatus={setIsLoggedIn} />} />
+          <Route path="/bookinfo/:bookid" element={<BookInfo />} />
+          <Route path="/read/:bookid" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
+          <Route path="/loginpage/" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>

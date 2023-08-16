@@ -10,9 +10,27 @@ import ReadButton from "../image/read_button.png";
 import HeartClicked from "../image/heart_clicked.png";
 import HeartUnclicked from "../image/heart_unclicked.png";
 import Raising from "../image/raising.png";
+import LeftCategories from "./leftCategories";
+
 import "./ScrollBar.css";
 
-import axios from "axios";
+function BookInfo() {
+  const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
+  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [isClickedSignUp, setClickedSignUp] = useState(false);
+
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setSelectedBookId(null);  // Reset selected book when changing category
+  }
+
+
+  const resetToInitialState = () => {
+    setSelectedBookId(null);
+    setSelectedCategory("주간 인기 책");
+    setClickedSignUp(false);
+  };
 
 const book = {
   book_id: 123,
@@ -45,6 +63,7 @@ function BookInfo() {
 
   return (
     <div style={{ height: "1024px", width: "1615px" }}>
+      <LeftCategories onCategoryChange={handleCategoryChange} onLogoClick={resetToInitialState} /> {/* onLogoClick prop 전달 */}
       <div
         style={{
           position: "absolute",
