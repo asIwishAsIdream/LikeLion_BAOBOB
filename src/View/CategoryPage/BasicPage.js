@@ -142,8 +142,8 @@ function BasicPageForm({
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-      scrollContainerRef.current.scrollWidth -
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.scrollWidth -
+          scrollContainerRef.current.clientWidth
     );
   };
 
@@ -151,17 +151,28 @@ function BasicPageForm({
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.clientWidth
     );
   }, []);
 
   if (isLoginClicked) {
-    return <LoginPage isLoggedIn={isLoggedIn} setIsLoginClicked={setIsLoginClicked} setLoginStatus={setLoginStatus} />;
-  }
-  else if (isClickedSignUp) {
-    return <SignUpPage isLoggedIn={isLoggedIn} setLoginStatus={setLoginStatus} setClickedSignUp={setClickedSignUp} setIsLoginClicked={setIsLoginClicked} />;
-  }
-  else {
+    return (
+      <LoginPage
+        isLoggedIn={isLoggedIn}
+        setIsLoginClicked={setIsLoginClicked}
+        setLoginStatus={setLoginStatus}
+      />
+    );
+  } else if (isClickedSignUp) {
+    return (
+      <SignUpPage
+        isLoggedIn={isLoggedIn}
+        setLoginStatus={setLoginStatus}
+        setClickedSignUp={setClickedSignUp}
+        setIsLoginClicked={setIsLoginClicked}
+      />
+    );
+  } else {
     return (
       <div>
         <Container>

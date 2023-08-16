@@ -27,7 +27,6 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
     // 이동
     navigate('/bookinfo/${bookId}');
   }
-
   const resetToInitialState = () => {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
@@ -35,8 +34,11 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
   return (
     <div style={{ height: "1024px", width: "1920px" }}>
-      <LeftCategories onCategoryChange={handleCategoryChange} onLogoClick={resetToInitialState} /> {/* onLogoClick prop 전달 */}
-
+      <LeftCategories
+        onCategoryChange={handleCategoryChange}
+        onLogoClick={resetToInitialState}
+      />{" "}
+      {/* onLogoClick prop 전달 */}
       <div
         style={{
           position: "absolute",
@@ -58,9 +60,6 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
 
       </div>
-
-
-
     </div>
   );
 }

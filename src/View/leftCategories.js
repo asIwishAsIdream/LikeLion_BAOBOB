@@ -3,7 +3,6 @@ import styled from "styled-components";
 import rectangleBox from "../image/Rectangle 3.png";
 import { useNavigate } from 'react-router-dom';
 import logo from "../image/Group 155.png";
-import mainTitle from "../image/Eternal Library.png";
 import line1 from "../image/line1.png";
 import "./Fonts.css";
 
