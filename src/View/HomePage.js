@@ -12,6 +12,11 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
   const navigate = useNavigate();
 
+  // app.jss 에서 전파
+  const handlebookidOnHP = (bookId) => {
+    navigate(`/bookinfo/${bookId}`);
+  }
+
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -47,7 +52,9 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
           setClickedSignUp={setClickedSignUp}
-          isClickedSignUp={isClickedSignUp} />
+          isClickedSignUp={isClickedSignUp}
+          setbookidBP={handlebookidOnHP}
+        />
 
 
       </div>

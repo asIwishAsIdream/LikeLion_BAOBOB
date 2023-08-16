@@ -19,11 +19,12 @@ function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false); // 로그인 에러 상태
-    const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedBookId, setSelectedBookId] = useState(null);
     const [isClickedSignUp, setClickedSignUp] = useState(false);
     const navigate = useNavigate();
 
+    // const LoginURL = '/user/login/'; // 이건 정식으로 서버에 올리고 URL을 설정하면 사용할 수 있게된다.
     const LoginURL = 'http://127.0.0.1:8000/user/login/';
 
     const handleSubmit = async (event) => {
@@ -39,6 +40,8 @@ function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
                 }
             }
             );
+
+            // localStorage.setItem("token", access_token);
             // 로그인 성공 시, 에러 상태를 false로 설정
             // 화면에 그려지는 걸 변경하기 위해 set 함수를 사용해준다
             setLoginError(false);

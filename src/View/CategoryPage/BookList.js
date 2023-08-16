@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import jsonData from './json.json';
 import BookCard from './BaseBookCover';
 
-function BookCardListPage({ onBookClick }) {
+function BookCardListPage({ onBookClick, setbookidBL }) {
     const transformedData = jsonData.map(book => ({
         image: book.book_cover.book_cover,
         book_id: book.book_id,
@@ -18,7 +18,10 @@ function BookCardListPage({ onBookClick }) {
     const cardsPerPage = 10;
     const totalPages = Math.ceil(transformedData.length / cardsPerPage);
     const currentData = transformedData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage);
-
+    // app.jss 에서 전파
+    const handlebookidOnBLP = (booid) => {
+        setbookidBL(booid);
+    }
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
@@ -29,6 +32,7 @@ function BookCardListPage({ onBookClick }) {
                         key={index}
                         book={book}
                         onBookClick={onBookClick} // When a book is clicked, its ID is passed to the parent component
+                        setbookid={handlebookidOnBLP}
                     />
                 ))}
             </div>
