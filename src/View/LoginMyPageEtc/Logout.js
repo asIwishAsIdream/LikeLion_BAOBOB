@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import
 
 // Search Box Component
-const SignUp_ = styled(Link)`
+const Logout_ = styled(Link)`
     margin-top: 13px;
     margin-left: 13px;
     font-family:'Apple SD Gothic Neo M', 'Noto Sans KR','Bagel Fat One',  sans-serif;
@@ -16,8 +16,8 @@ const SignUp_ = styled(Link)`
     }
 `;
 
-function SignUp({ onClick }) {
-    return <SignUp_ onClick={onClick}>회원가입</SignUp_>; // href 대신 to prop를 사용
+function Logout() {
+    return <Logout_ >로그아웃</Logout_>; // href 대신 to prop를 사용
 }
 
-export default SignUp;
+export default Logout;

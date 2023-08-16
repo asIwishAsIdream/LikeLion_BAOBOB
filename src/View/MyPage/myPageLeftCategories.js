@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import rectangleBox from "../../image/Rectangle 3.png";
 import { useNavigate } from 'react-router-dom';
-import logo from "../../image/Ellipse 1.png";
+import logo from "../../image/Group 155.png";
 import mainTitle from "../../image/Eternal Library.png";
 import line1 from "../../image/line1.png";
 import mypage from "../../image/mypage.png";
@@ -89,12 +89,12 @@ function MypageLeftCategories({ onMypageCategoryChange }) {
                         src={logo}
                         onClick={handleLogoClick}
                         alt="logo"
-                        style={{ position: "absolute", left: 85, top: 43, cursor: "pointer" }}
-                    />
-                    <img
-                        src={mainTitle}
-                        alt="Eternal Library"
-                        style={{ position: "absolute", left: 57, top: 152 }}
+                        style={{
+                            position: "absolute",
+                            left: 38,
+                            top: 0,
+                            cursor: "pointer",
+                        }}
                     />
                 </div>
 

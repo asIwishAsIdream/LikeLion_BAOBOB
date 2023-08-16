@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import rectangleBox from "../image/Rectangle 3.png";
-
+import { useNavigate } from 'react-router-dom';
 import logo from "../image/Group 155.png";
 import mainTitle from "../image/Eternal Library.png";
 import line1 from "../image/line1.png";
@@ -51,7 +51,8 @@ function LeftCategories({ onCategoryChange, onLogoClick }) {
   ];
   // 카테고리 선택을 위한 Dictionary
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
+  const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -62,6 +63,8 @@ function LeftCategories({ onCategoryChange, onLogoClick }) {
     e.preventDefault(); // Prevent the default link click action
     handleCategoryClick("주간 인기 책");
     onCategoryChange("주간 인기 책");
+    navigate('/');
+
     if (onLogoClick) onLogoClick(); // 추가된 부분: HomePage.js의 상태를 초기화하는 콜백 함수 호출
   };
 
@@ -148,22 +151,7 @@ function LeftCategories({ onCategoryChange, onLogoClick }) {
           alt="line1"
           style={{ position: "absolute", left: 0, top: 772 }}
         />
-        <div
-          style={{
-            position: "absolute",
-            left: 38,
-            top: 812,
-            display: "block",
-            width: 305,
-            textAlign: "left",
-          }}
-        >
-          <CategoryListLeft
-            categories={[`고객센터`]}
-            selectedCategory={selectedCategory}
-            onCategoryClick={handleCategoryClick}
-          />
-        </div>
+
       </div>
     </div>
   );

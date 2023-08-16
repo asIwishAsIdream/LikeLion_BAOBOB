@@ -7,6 +7,8 @@ import Login_ from "./Login";
 import SmallCategoryBar from "./SmallCategoryBar";
 import SignUp from "./SignUpText";
 import LoginPage from "../LoginMyPageEtc/LoginPage";
+import Logout from "../LoginMyPageEtc/Logout";
+import SignUpPage from "../LoginMyPageEtc/SignUp";
 
 import SortComponent from "./SortByOptionsinCategoryPage/SortingComponent";
 import right_arrow from "../../image/right_arrow_small_category.png";
@@ -89,6 +91,8 @@ function BasicPageForm({
   onBookClick,
   isLoggedIn,
   setLoginStatus,
+  isClickedSignUp,
+  setClickedSignUp
 }) {
   // POST 요청 필요
 
@@ -110,11 +114,17 @@ function BasicPageForm({
   // 가로 title 선택 제어
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   // 로그인 임시 여부
-  const [isLoggedInTmp, setIsLoggedInTmp] = useState(false);
+  const [isLoginClicked, setIsLoginClicked] = useState(false);
+
 
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLoginClick = () => {
-    setLoginStatus(true); // 여기서 HomePage.js의 로그인 상태를 변경
+    setIsLoginClicked(true); // 여기서 HomePage.js의 로그인 상태를 변경
+  };
+
+  // 회원가입 버튼 클릭 이벤트 핸들러
+  const handleSignUpClick = () => {
+    setClickedSignUp(true);
   };
 
   const selectCategory = (index) => {
@@ -126,8 +136,8 @@ function BasicPageForm({
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-        scrollContainerRef.current.scrollWidth -
-          scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.scrollWidth -
+      scrollContainerRef.current.clientWidth
     );
   };
 
@@ -135,13 +145,17 @@ function BasicPageForm({
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-        scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.clientWidth
     );
   }, []);
 
-  if (isLoggedIn) {
-    return <LoginPage />;
-  } else {
+  if (isLoginClicked) {
+    return <LoginPage isLoggedIn={isLoggedIn} setIsLoginClicked={setIsLoginClicked} setLoginStatus={setLoginStatus} />;
+  }
+  else if (isClickedSignUp) {
+    return <SignUpPage isLoggedIn={isLoggedIn} setLoginStatus={setLoginStatus} setClickedSignUp={setClickedSignUp} setIsLoginClicked={setIsLoginClicked} />;
+  }
+  else {
     return (
       <div>
         <Container>
@@ -153,13 +167,14 @@ function BasicPageForm({
             {isLoggedIn ? (
               <>
                 <MyPageTag />
-                {/* <Logout /> */}
+                <Divider>|</Divider>
+                <Logout />
               </>
             ) : (
               <>
                 <Login_ onClick={handleLoginClick} />
                 <Divider>|</Divider>
-                <SignUp />
+                <SignUp onClick={handleSignUpClick} />
               </>
             )}
           </RightSection>
