@@ -1,27 +1,38 @@
 // BookList.js
-import React, { useState } from 'react';
-import jsonData from './json.json';
 import BookCard from './BaseBookCover';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function BookCardListPage({ onBookClick, setbookidBL }) {
-    const transformedData = jsonData.map(book => ({
-        image: book.book_cover.book_cover,
-        book_id: book.book_id,
-        title: book.book_name,
-        author: book.author,
-        expiration: "기증",
-        expirationYear: book.publication_year,
-        rating: book.average_rating
-    }));
+function BookCardListPage() {
+    const [booksData, setBooksData] = useState([]); // 서버로부터 받아온 데이터를 저장할 상태
+
+    const serverUrl = "http://127.0.0.1:8000/library/";
+
+    useEffect(() => {
+        axios.get(serverUrl)
+            .then((response) => {
+                const transformedData = response.data.map(book => ({
+                    image: book.book_cover.book_cover,
+                    book_id: book.book_id,
+                    title: book.book_name,
+                    author: book.author,
+                    expiration: "기증",
+                    expirationYear: book.publication_year,
+                    rating: book.average_rating
+                }));
+
+                setBooksData(transformedData); // 변환된 데이터를 상태에 저장
+            })
+            .catch((error) => {
+                console.error("There was a problem with the request:", error);
+            });
+    }, []); // useEffect를 사용하여 컴포넌트 마운트 시 한 번만 서버 요청
 
     const [currentPage, setCurrentPage] = useState(1);
     const cardsPerPage = 10;
-    const totalPages = Math.ceil(transformedData.length / cardsPerPage);
-    const currentData = transformedData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage);
-    // app.jss 에서 전파
-    const handlebookidOnBLP = (booid) => {
-        setbookidBL(booid);
-    }
+    const totalPages = Math.ceil(booksData.length / cardsPerPage);
+    const currentData = booksData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage);
+
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
@@ -31,8 +42,6 @@ function BookCardListPage({ onBookClick, setbookidBL }) {
                     <BookCard
                         key={index}
                         book={book}
-                        onBookClick={onBookClick} // When a book is clicked, its ID is passed to the parent component
-                        setbookid={handlebookidOnBLP}
                     />
                 ))}
             </div>

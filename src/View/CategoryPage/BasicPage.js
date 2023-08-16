@@ -88,12 +88,10 @@ const ScrollButton = styled.button`
 function BasicPageForm({
   bookId,
   title,
-  onBookClick,
   isLoggedIn,
   setLoginStatus,
   isClickedSignUp,
   setClickedSignUp,
-  setbookidBP
 }) {
   // POST 요청 필요
 
@@ -117,10 +115,6 @@ function BasicPageForm({
   // 로그인 임시 여부
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
-  // app.jss 에서 전파
-  const handlebookidOnBP = (booid) => {
-    setbookidBP(booid);
-  }
 
 
   // 로그인 버튼 클릭 이벤트 핸들러
@@ -142,8 +136,8 @@ function BasicPageForm({
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-        scrollContainerRef.current.scrollWidth -
-          scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.scrollWidth -
+      scrollContainerRef.current.clientWidth
     );
   };
 
@@ -151,7 +145,7 @@ function BasicPageForm({
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-        scrollContainerRef.current.clientWidth
+      scrollContainerRef.current.clientWidth
     );
   }, []);
 
@@ -220,7 +214,7 @@ function BasicPageForm({
         <div>
           <SortComponent />
         </div>
-        <BookList onBookClick={onBookClick} setbookidBL={handlebookidOnBP} ></BookList>
+        <BookList ></BookList>
       </div>
     );
   }

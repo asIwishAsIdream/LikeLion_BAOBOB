@@ -1,7 +1,6 @@
 // App.js
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from "./View/HomePage";
@@ -10,6 +9,7 @@ import ReadPage from './View/ReadPage/ReadPage.js';
 import MyPage from './View/MyPage/myPage';
 import LoginPage from './View/LoginMyPageEtc/LoginPage';
 import SignUpPage from './View/LoginMyPageEtc/SignUp';
+import BookInfoTest from './View/testBI';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,8 +20,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} setLoginStatus={setIsLoggedIn} />} />
-          <Route path="/bookinfo/${bookid}" element={<BookInfo />} />
-          <Route path="/read/${bookid}" element={<ReadPage />} />
+          <Route path="/bookinfo/:bookId" element={<BookInfo />} />
+          <Route path="/read/:bookid" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
           <Route path="/loginpage/" element={<LoginPage />} />
           <Route path="/signupage/" element={<SignUpPage />} />

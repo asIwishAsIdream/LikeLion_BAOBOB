@@ -12,21 +12,10 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
   const navigate = useNavigate();
 
-  // app.jss 에서 전파
-  const handlebookidOnHP = (bookId) => {
-    navigate(`/bookinfo/${bookId}`);
-  }
-
-
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   }
 
-  const handleBookClick = (bookId) => {
-    console.log("in");
-    // 이동
-    navigate('/bookinfo/${bookId}');
-  }
   const resetToInitialState = () => {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
@@ -50,12 +39,10 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
         <BasicPageForm
           title={selectedCategory}
-          onBookClick={handleBookClick}
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
           setClickedSignUp={setClickedSignUp}
           isClickedSignUp={isClickedSignUp}
-          setbookidBP={handlebookidOnHP}
         />
 
 
