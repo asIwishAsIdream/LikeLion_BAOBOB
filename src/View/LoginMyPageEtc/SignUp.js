@@ -3,7 +3,7 @@ import axios from 'axios';  // axios를 사용하기 위해 import합니다.
 import { useNavigate } from 'react-router-dom';
 
 import LeftCategories from '../leftCategories';
-import loginText from "../../image/login.png";
+import signupText from "../../image/signupText.png";
 import signUpBtn from "../../image/signupBtn.png";
 import signup_component from "../../image/signup_component.png";
 import successedSignUp from "../../image/successedSignUp.png";
@@ -36,7 +36,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
         try {
             await axios.post(signUpURL, {
-                'nickname': "nicktest15",
+                'nickname': "nicktest1",
                 'username': nickname,
                 'email': email,
                 'password1': password,
@@ -82,8 +82,8 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
 
                 <img
-                    src={loginText}
-                    alt="loginText"
+                    src={signupText}
+                    alt="signupText"
                     style={{ position: "absolute", left: 72.5, top: 126 }}
                 />
 
@@ -94,11 +94,11 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                 />
 
 
-                <img
+                {/* <img
                     src={successedSignUp}
                     alt="successedSignUp"
                     style={{ position: "absolute", left: 895 - 304.5, top: 854 }}
-                />
+                /> */}
 
 
 

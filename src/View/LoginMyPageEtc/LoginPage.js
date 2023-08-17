@@ -14,7 +14,7 @@ import ErrorLogin from "../../image/errorOptionLogin.png";
 import LeftCategories from '../leftCategories.js';
 
 
-function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
+function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,12 +26,14 @@ function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
 
     // const LoginURL = '/user/login/'; // 이건 정식으로 서버에 올리고 URL을 설정하면 사용할 수 있게된다.
     const LoginURL = 'http://127.0.0.1:8000/user/login/';
+    const MainPageURL = 'http://127.0.0.1:8000/';
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지
 
         try {
-            await axios.post(LoginURL, {
+            const response = await axios.post(LoginURL, {
                 'email': email,
                 'password': password,
             }, {
@@ -41,13 +43,13 @@ function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
             }
             );
 
-            // localStorage.setItem("token", access_token);
-            // 로그인 성공 시, 에러 상태를 false로 설정
-            // 화면에 그려지는 걸 변경하기 위해 set 함수를 사용해준다
-            setLoginError(false);
-            setIsLoginClicked(false);
-            setLoginStatus(true);
+            const accessToken = response.data.token.access; // 서버에서 받은 access 토큰
+            localStorage.setItem('userToken', accessToken);
+
+
             navigate('/');
+
+
 
         } catch (error) {
             if (error.response && error.response.status === 400) {

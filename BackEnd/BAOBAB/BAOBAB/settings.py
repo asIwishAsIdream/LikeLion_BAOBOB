@@ -86,7 +86,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 MIDDLEWARE = [
-      'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
     "django.middleware.common.CommonMiddleware",
     
     "django.middleware.security.SecurityMiddleware",
@@ -225,6 +226,10 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 # 이메일에 자동으로 표시되는 사이트 정보
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[BAOBAB]"
+
+CORS_ALLOW_CREDENTIALS = True
+
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",

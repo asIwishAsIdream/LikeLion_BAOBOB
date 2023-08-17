@@ -2,15 +2,16 @@
 import React, { useState, useEffect } from "react";
 import BasicPageForm from "./CategoryPage/BasicPage";
 import LeftCategories from "./leftCategories";
-import BookInfo from "./bookInfo";
-import { useNavigate } from 'react-router-dom';
 
 
 function HomePage({ isLoggedIn, setLoginStatus }) {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [isClickedSignUp, setClickedSignUp] = useState(false);
 
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkLoginStatus();  // 컴포넌트가 마운트될 때 로그인 상태 확인
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -20,6 +21,15 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
   };
+
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      setLoginStatus(true); // 사용자가 로그인 상태
+    } else {
+      setLoginStatus(false); // 사용자가 로그아웃 상태
+    }
+  }
 
   return (
     <div style={{ height: "1024px", width: "1920px" }}>
@@ -41,8 +51,6 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
           title={selectedCategory}
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
-          setClickedSignUp={setClickedSignUp}
-          isClickedSignUp={isClickedSignUp}
         />
 
 
