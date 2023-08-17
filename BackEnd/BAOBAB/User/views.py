@@ -96,28 +96,7 @@ class LoginView(APIView):
         else:
             return Response({'error' : '존재하지 않는 회원정보입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 class MypageView(APIView):
-    # 유저 정보 확인
-    # def get(self, request):
-    #     try:
-            
-    #         # 'Authorization' 헤더에서 토큰을 가져옵니다.
-    #         auth_header = request.headers.get('Authorization')
 
-    #         # 헤더가 없거나 Bearer 스키마를 사용하지 않을 경우 에러를 반환
-    #         if not auth_header or not auth_header.startswith('Bearer '):
-    #             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-    #         # 실제 토큰만을 추출합니다.
-    #         access = auth_header.split('Bearer ')[1]
-            
-    #         # access token을 decode 해서 유저 id 추출 => 유저 식별
-    #         # access = request.COOKIES['access']
-    #         payload = jwt.decode(access, SECRET_KEY, algorithms=['HS256'])
-
-    #         pk = payload.get('user_id')
-    #         user = get_object_or_404(User, pk=pk)
-    #         serializer = UserSerializer(instance=user)
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
     def get(self, request):
         try:
             user = request.user
