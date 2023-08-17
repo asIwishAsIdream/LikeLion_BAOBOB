@@ -54,6 +54,8 @@ function LoginPage() {
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setLoginError(true); // 로그인 실패 시, 에러 상태를 true로 설정
+            } else if (error.response.status === 500) {
+                alert("메일 인증 확인 부탁드립니다");
             } else {
                 console.error("기타 오류", error);
             }

@@ -36,7 +36,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
         try {
             await axios.post(signUpURL, {
-                'nickname': "nicktest1",
+                'nickname': "nicktest2",
                 'username': nickname,
                 'email': email,
                 'password1': password,
@@ -193,7 +193,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                     src={signUpBtn}
                     alt="signUpBtn"
                     onClick={() => document.querySelector("button[type='submit']").click()}  // 버튼 태그를 클릭하도록 변경
-                    style={{ position: "absolute", left: 1016 - 304.5, top: 770 }}
+                    style={{ position: "absolute", left: 1016 - 304.5, top: 770, cursor: "pointer" }}
                 />
             </div>
 

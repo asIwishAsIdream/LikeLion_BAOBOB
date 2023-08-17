@@ -26,6 +26,7 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
     const token = localStorage.getItem('userToken');
     if (token) {
       setLoginStatus(true); // 사용자가 로그인 상태
+      console.log(token);
     } else {
       setLoginStatus(false); // 사용자가 로그아웃 상태
     }
