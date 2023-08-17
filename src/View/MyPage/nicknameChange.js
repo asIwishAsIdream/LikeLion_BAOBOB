@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
 import nickname from "../../image/nickname_change.png";
 import nicknamechange from "../../image/nicknameText.png";
@@ -12,14 +13,35 @@ import nimText from "../../image/nimText.png";
 
 function NickNameChange(userInfo) {
     const [usernameData, setUsernameData] = useState(''); // 닉네임 데이터를 저장할 state
+    const [newNickname, setNewNickname] = useState(''); // 변경할 닉네임을 저장할 state
 
-    console.log(userInfo.userInfo.nickname);
+
+    const UpdateURL = 'http://localhost:8000/user/mypage/update/';
+
+
 
 
     useEffect(() => {
         setUsernameData(userInfo.userInfo.nickname);
     }, []);
 
+    const handleSubmit = async () => {
+        const data = {
+            username: userInfo.userInfo.username,
+            email: userInfo.userInfo.email,
+            nickname: newNickname
+        };
+
+        try {
+            const response = await axios.put(UpdateURL, data);
+            if (response.status === 200) {
+                alert("닉네임이 변경되었습니다.");
+                setUsernameData(newNickname);  // 닉네임 상태 업데이트
+            }
+        } catch (error) {
+            alert("닉네임 변경에 실패했습니다.");
+        }
+    };
 
     return (
         <div>
@@ -43,7 +65,7 @@ function NickNameChange(userInfo) {
             <img
                 src={nimText}
                 alt="nimText"
-                style={{ position: "absolute", left: 943 + (45 * usernameData.length), top: 326 }}
+                style={{ position: "relative", left: 943 + (45 * usernameData.length), top: 326 }}
             // usernameData의 길이와 30px 폰트 크기를 고려하여 hello 이미지의 위치를 조정합니다.
             />
 
@@ -57,11 +79,7 @@ function NickNameChange(userInfo) {
                 alt="nicknamechange"
                 style={{ position: "absolute", left: 729, top: 490 }}
             />
-            <img
-                src={check_nickname}
-                alt="check_nickname"
-                style={{ position: "absolute", left: 1381, top: 481 }}
-            />
+
             <img
                 src={RectangleNick}
                 alt="RectangleNick"
@@ -88,15 +106,23 @@ function NickNameChange(userInfo) {
             <input
                 type="text"
                 placeholder="변경할 닉네임을 입력하세요."
+                value={newNickname}  // value를 상태로 설정
+                onChange={(e) => setNewNickname(e.target.value)}  // 입력 값이 변경될 때마다 상태 업데이트
                 style={{
                     position: "absolute",
                     left: 929,
                     top: 493,
-                    border: 'none', // 테두리 제거
-                    outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
-                    fontSize: '22px', // placeholder 글꼴 크기
-                    width: '300px', // 너비 조절
+                    border: 'none',
+                    outline: 'none',
+                    fontSize: '22px',
+                    width: '300px',
                 }}
+            />
+            <img
+                src={check_nickname}
+                onClick={handleSubmit}
+                alt="check_nickname"
+                style={{ position: "absolute", left: 1381, top: 481, cursor: 'pointer' }}
             />
         </div>
     );
