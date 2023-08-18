@@ -15,17 +15,16 @@ import editBox from "../../image/Rectangle 34.png";
 import "../ScrollBar.css";
 import "./ReadPage.css";
 import { fabric } from "fabric";
-import { render } from "@testing-library/react";
 import plusAnnotation from "../../image/Group 118.png";
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
-import { click } from "@testing-library/user-event/dist/click";
+import axios from "axios";
 
 var drawHighlight = false;
 var deleteHighlight = false;
 
 var book = {
   book_id: 123,
-  page_image: [],
+  page_count: 7,
+  page_image: "/image/mars/mars (",
   book_cover: "/image/book_example.png",
   mainCategory_id: 1,
   subCategory_id: 2,
@@ -54,13 +53,24 @@ function CanvasRender({}) {
   const canvasRef = useRef(null);
 
   var startDrawingPoint;
+  const [book, setBook] = useState({});
+  const { bookId } = useParams();
 
-  var tempGroup;
   useEffect(() => {
     const canvasElement = canvasRef.current;
+    var serverUrl = `/library/detail/${bookId}/`;
 
+    axios
+      .get(serverUrl)
+      .then((response) => {
+        setBook(response.data);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the request:", error);
+      });
     var isWriting = false;
     var textBoxArray = [];
+    var tempGroup;
     var tb = {
       obj: null,
       connectedRectId: 0,
@@ -424,7 +434,7 @@ function CanvasRender({}) {
         canvas.renderAll();
       });
     }
-  }, []);
+  }, [bookId]);
 
   return <canvas ref={canvasRef} />;
 }
@@ -469,7 +479,7 @@ function ReadPage() {
           lineHeight: "36px",
         }}
       >
-        {"현진건"}
+        {book.author}
       </div>
       <img
         src={bookmark}
@@ -492,7 +502,7 @@ function ReadPage() {
           fontFamily: "SDB",
         }}
       >
-        {"운수 좋은 날"}
+        {book.book_name}
       </div>
       <img
         src={leftArrow}
