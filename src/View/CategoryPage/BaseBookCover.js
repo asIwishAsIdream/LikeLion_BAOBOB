@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 function BookCard({ book }) {
   const navigate = useNavigate(); // useNavigate hook 사용
-
+  const imgURL = process.env.PUBLIC_URL +
+    `/media/${book.title}/cover/${book.title}_cover.jpeg`;
   return (
     <div
       onClick={() => {
@@ -19,8 +20,7 @@ function BookCard({ book }) {
     >
       <img
         src={
-          process.env.PUBLIC_URL +
-          `/media/${book.title}/cover/${book.title}_cover.jpeg`
+          imgURL
         }
         alt={book.title}
         style={{ width: "188px", height: "282.99px" }}

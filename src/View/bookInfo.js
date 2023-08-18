@@ -175,14 +175,10 @@ function BookInfo() {
           {book.book_status}
         </div>
         <img
-<<<<<<< HEAD
-          src={process.env.PUBLIC_URL + `/책표지/${book.book_name}.jpeg`}
-=======
           src={
             process.env.PUBLIC_URL +
             `/media/${book.title}/cover/${book.title}_cover.jpeg`
           }
->>>>>>> e7f83049af7a52b4551e4fadf9c342ee996f8238
           alt={`Cover of ${book.book_name}`}
           style={{ position: "absolute", left: 1356 - 305, top: 186 }}
         />

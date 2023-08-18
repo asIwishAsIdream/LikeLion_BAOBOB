@@ -97,7 +97,7 @@ function CanvasRender({ }) {
       var temp = src.split("(");
 
       temp = temp[0] + "(";
-      temp.replace("http://127.0.0.1:8000", "");
+      temp.replace("http://baobab.kro.kr", "");
       img.src = process.env.PUBLIC_URL + temp + num + ").png";
       img.onload = function () {
         var fabricImage = new fabric.Image(img, {
