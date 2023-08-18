@@ -23,6 +23,24 @@ import { click } from "@testing-library/user-event/dist/click";
 var drawHighlight = false;
 var deleteHighlight = false;
 
+var book = {
+  book_id: 123,
+  page_image: [],
+  book_cover: "/image/book_example.png",
+  mainCategory_id: 1,
+  subCategory_id: 2,
+  book_name: "김남혁 자서전",
+  author: "천하제일김남혁",
+  is_popular: true,
+  publication_year: 2023,
+  views: 77,
+  like: 88,
+  average_rating: 5.5,
+  book_introduction: "text\n\ntext kiki\n",
+  book_status: "text",
+  created_at: "2021-05-01",
+};
+
 const plusButton = new fabric.Image(null, {
   selectable: false,
 });
@@ -72,46 +90,38 @@ function CanvasRender({}) {
       canvas.on("object:scaling", function (e) {
         var eventObject = e.target;
         if (eventObject.type === "rect" || eventObject.type === "group") {
-          var eventObject = e.target;
-          if (eventObject.type === "rect" || eventObject.type === "group") {
-            if (numBox != null) {
-              canvas.remove(numBox);
-              canvas.remove(textBox);
-              canvas.remove(eb);
-              textBox.exitEditing();
-              numBox.set({
-                left:
-                  eventObject.left + eventObject.width * eventObject.scaleX + 5,
-                top: eventObject.top - 30, //plusButton 일때는 30, 텍스트일때는 55
-              });
-              textBox.set({
-                left:
-                  eventObject.left +
-                  eventObject.width * eventObject.scaleX +
-                  40,
-                top: eventObject.top - 55,
-              });
-              eb.set({
-                left:
-                  eventObject.left +
-                  eventObject.width * eventObject.scaleX +
-                  30,
-                top: eventObject.top - 70,
-              });
-              canvas.renderAll();
-            }
-          } else if (tempGroup != null) {
-            tempGroup.set({
+          if (numBox != null) {
+            canvas.remove(numBox);
+            canvas.remove(textBox);
+            canvas.remove(eb);
+            textBox.exitEditing();
+            numBox.set({
               left:
                 eventObject.left + eventObject.width * eventObject.scaleX + 5,
               top: eventObject.top - 30, //plusButton 일때는 30, 텍스트일때는 55
             });
+            textBox.set({
+              left:
+                eventObject.left + eventObject.width * eventObject.scaleX + 40,
+              top: eventObject.top - 55,
+            });
+            eb.set({
+              left:
+                eventObject.left + eventObject.width * eventObject.scaleX + 30,
+              top: eventObject.top - 70,
+            });
             canvas.renderAll();
           }
-          eventObject.set({
-            scaleY: 1, // Lock the vertical scaling
+        } else if (tempGroup != null) {
+          tempGroup.set({
+            left: eventObject.left + eventObject.width * eventObject.scaleX + 5,
+            top: eventObject.top - 30, //plusButton 일때는 30, 텍스트일때는 55
           });
+          canvas.renderAll();
         }
+        eventObject.set({
+          scaleY: 1, // Lock the vertical scaling
+        });
       });
 
       canvas.on("object:moving", function (e) {
