@@ -20,8 +20,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} setLoginStatus={setIsLoggedIn} />} />
-          <Route path="/bookinfo/${bookid}" element={<BookInfo />} />
-          <Route path="/read/${bookid}" element={<ReadPage />} />
+          <Route path="/bookinfo/:bookid" element={<BookInfo />} />
+          <Route path="/read/:bookid" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
           <Route path="/loginpage/" element={<LoginPage />} />
           <Route path="/signupage/" element={<SignUpPage />} />

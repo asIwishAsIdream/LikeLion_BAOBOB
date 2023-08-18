@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Fonts.css";
 import BackArrow from "../image/back_arraw.png";
@@ -32,9 +32,13 @@ var book = {
   created_at: "2021-05-01",
 };
 function BookInfo() {
+  console.log("in");
+  const [book, setBook] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
-  const [selectedBookId, setSelectedBookId] = useState(null);
   const [isClickedSignUp, setClickedSignUp] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState(null);
+
+  const [selectedIcon, setSelectedIcon] = useState(null);
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedBookId(null); // Reset selected book when changing category
@@ -46,46 +50,85 @@ function BookInfo() {
     setClickedSignUp(false);
   };
 
-  const bookId = useParams();
 
-  var serverUrl = "http://127.0.0.1:8000/detail/"; // 실제 백엔드 서버 URL로 바꿔주세요
-  serverUrl += bookId + "/";
-  const navigate = useNavigate(); // useNavigate hook 사용
-  const [selectedIcon, setSelectedIcon] = useState(null);
-  // 뒤로 가기 함수 정의
+  const { bookId } = useParams();
+  const navigate = useNavigate();
 
-  axios
-    .get(serverUrl)
-    .then((response) => {
-      const data = response.data; // 받아온 JSON 데이터
+  useEffect(() => {
+    var serverUrl = `http://127.0.0.1:8000/library/detail/${bookId}/`;
 
-      book.book_cover = data.book_cover.book_cover;
-
-      book.book_id = data["book_id"];
-      book.mainCategory_id = data["mainCategory_id"];
-      book.subCategory_id = data["subCategory_id"];
-      book.book_name = data["book_name"];
-      book.author = data["author"];
-      book.is_popular = data["is_popular"];
-      book.publication_year = parseInt(data["publication_year"]);
-      book.views = data["views"];
-      book.like = data["like"];
-      book.average_rating = data["average_rating"];
-      book.book_introduction = data["book_introduction"];
-      book.book_status = data["book_status"];
-      book.created_at = data["created_at"];
-    })
-    .catch((error) => {
-      console.error("There was a problem with the request:", error);
-    });
+    axios.get(serverUrl)
+      .then(response => {
+        setBook(response.data);
+      })
+      .catch(error => {
+        console.error("There was a problem with the request:", error);
+      });
+  }, [bookId]);
 
   const handleGoBack = () => {
-    navigate(-1); // 이전 페이지로 이동
+    navigate(-1);
   };
 
   const handleReadClick = () => {
     navigate(`/read/${bookId}`);
   };
+  // const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
+  // const [selectedBookId, setSelectedBookId] = useState(null);
+  // const [isClickedSignUp, setClickedSignUp] = useState(false);
+  // const handleCategoryChange = (category) => {
+  //   setSelectedCategory(category);
+  //   setSelectedBookId(null); // Reset selected book when changing category
+  // };
+
+  // const resetToInitialState = () => {
+  //   setSelectedBookId(null);
+  //   setSelectedCategory("주간 인기 책");
+  //   setClickedSignUp(false);
+  // };
+
+  // const {bookId} = useParams();
+
+  // console.log(bookId);
+
+  // var serverUrl = "http://127.0.0.1:8000/detail/"; // 실제 백엔드 서버 URL로 바꿔주세요
+  // serverUrl += bookId + "/";
+  // const navigate = useNavigate(); // useNavigate hook 사용
+  // const [selectedIcon, setSelectedIcon] = useState(null);
+  // // 뒤로 가기 함수 정의
+
+  // axios
+  //   .get(serverUrl)
+  //   .then((response) => {
+  //     const data = response.data; // 받아온 JSON 데이터
+
+  //     book.book_cover = data.book_cover.book_cover;
+
+  //     book.book_id = data["book_id"];
+  //     book.mainCategory_id = data["mainCategory_id"];
+  //     book.subCategory_id = data["subCategory_id"];
+  //     book.book_name = data["book_name"];
+  //     book.author = data["author"];
+  //     book.is_popular = data["is_popular"];
+  //     book.publication_year = parseInt(data["publication_year"]);
+  //     book.views = data["views"];
+  //     book.like = data["like"];
+  //     book.average_rating = data["average_rating"];
+  //     book.book_introduction = data["book_introduction"];
+  //     book.book_status = data["book_status"];
+  //     book.created_at = data["created_at"];
+  //   })
+  //   .catch((error) => {
+  //     console.error("There was a problem with the request:", error);
+  //   });
+
+  // const handleGoBack = () => {
+  //   navigate(-1); // 이전 페이지로 이동
+  // };
+
+  // const handleReadClick = () => {
+  //   navigate(`/read/${bookId}`);
+  // };
 
   return (
     <div style={{ height: "1024px", width: "1615px" }}>
