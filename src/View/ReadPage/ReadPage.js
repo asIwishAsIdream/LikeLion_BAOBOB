@@ -1,8 +1,6 @@
 // ReadPage.js
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-import page1 from "../../image/1page.png";
 import pencil from "../../image/pencil_simple_line_fill_icon.png";
 import pencilBlue from "../../image/pencil_blue.png";
 import eraser from "../../image/eraser_fill_icon.png";
@@ -21,13 +19,25 @@ import "./ReadPage.css";
 import { fabric } from "fabric";
 import plusAnnotation from "../../image/Group 118.png";
 import axios from "axios";
+import grayRect from "../../image/Rectangle 23.png";
 
 var drawHighlight = false;
 var deleteHighlight = false;
 
-var book = {
+var countObj;
+
+const bridgeObj = {
+  get number() {
+    return this._num || 0;
+  },
+  set number(num) {
+    countObj.number = num;
+  },
+};
+
+var bookData = {
   book_id: 123,
-  page_count: 7,
+  page_count: 9,
   page_image: "/image/mars/mars (",
   book_cover: "/image/book_example.png",
   mainCategory_id: 1,
@@ -43,7 +53,7 @@ var book = {
   book_status: "text",
   created_at: "2021-05-01",
 };
-
+var curP;
 const plusButton = new fabric.Image(null, {
   selectable: false,
 });
@@ -77,19 +87,14 @@ function CanvasRender({ }) {
     var tempGroup;
     var tb = {
       obj: null,
+      page: 1,
       connectedRectId: 0,
     };
 
-    if (canvasElement) {
-      const canvas = new fabric.Canvas(canvasElement, {
-        width: 1202,
-        height: 1550,
-        position: "absolute",
-        selection: false,
-      });
-
+    function setPage(src, num, canvas) {
+      if (curP) canvas.clear();
       var img = new Image(); //페이지 로드
-      img.src = page1;
+      img.src = process.env.PUBLIC_URL + src + num + ").png";
       img.onload = function () {
         var fabricImage = new fabric.Image(img, {
           left: 0,
@@ -97,8 +102,32 @@ function CanvasRender({ }) {
           selectable: false,
         });
 
-        canvas.add(fabricImage);
-        canvas.sendToBack(fabricImage);
+        curP = fabricImage;
+        canvas.add(curP);
+        canvas.sendToBack(curP);
+        canvas.renderAll();
+      };
+    }
+
+    if (canvasElement) {
+      const canvas = new fabric.Canvas(canvasElement, {
+        width: 1202,
+        height: 1550,
+        position: "absolute",
+        selection: true,
+        selectable: false,
+      });
+
+      setPage(bookData.page_image, 1, canvas);
+
+      countObj = {
+        get number() {
+          return this._num || 0;
+        },
+        set number(num) {
+          this._num = num;
+          setPage(bookData.page_image, num, canvas);
+        },
       };
 
       canvas.on("object:scaling", function (e) {
@@ -176,6 +205,7 @@ function CanvasRender({ }) {
       var isDrawing = false;
       var rectTag = 0;
       canvas.on("mouse:down", (event) => {
+        if (!event.target) return;
         var pointer = canvas.getPointer(event.e);
 
         if (drawHighlight) {
@@ -214,6 +244,7 @@ function CanvasRender({ }) {
       var numBox;
       var eb;
       canvas.on("mouse:up", (event) => {
+        if (!event.target) return;
         if (isDrawing) {
           isDrawing = false;
         } else {
@@ -365,6 +396,7 @@ function CanvasRender({ }) {
 
         var tbt = Object.create(tb);
         tbt.obj = textBox;
+        tbt.page = countObj.number;
         tbt.connectedRectId = clickedObject.id;
         textBoxArray.push(tbt);
 
@@ -444,6 +476,12 @@ function CanvasRender({ }) {
 }
 
 function ReadPage() {
+  const [text, setText] = useState(1);
+  function onPageChange(e) {
+    if (!e.target) return;
+    setText(e.target.value);
+    bridgeObj.number = e.target.value;
+  }
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate(); // useNavigate hook 사용
@@ -499,7 +537,7 @@ function ReadPage() {
           lineHeight: "36px",
         }}
       >
-        {book.author}
+        {bookData.author}
       </div>
       <img
         src={bookmark}
@@ -513,6 +551,44 @@ function ReadPage() {
         }}
       />
 
+      <img
+        src={grayRect}
+        alt="rect"
+        style={{
+          position: "absolute",
+          left: "1111px",
+          top: "200px",
+        }}
+      />
+      <input
+        style={{
+          width: "30px",
+          height: "30px",
+          position: "absolute",
+          left: "1137px",
+          top: "214px",
+          fontSize: "30px",
+          border: 0,
+          outline: "none",
+          fontFamily: "SDSB",
+          color: "#3477CF",
+        }}
+        onChange={onPageChange}
+        value={text}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: "1170px",
+          top: "209px",
+          fontFamily: "SDSB",
+          fontSize: "30px",
+          color: "#545454",
+        }}
+      >
+        {"/ " + bookData.page_count}
+      </div>
+
       <div
         style={{
           position: "absolute",
@@ -522,7 +598,7 @@ function ReadPage() {
           fontFamily: "SDB",
         }}
       >
-        {book.book_name}
+        {bookData.book_name}
       </div>
       <img
         src={leftArrow}
