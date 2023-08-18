@@ -24,7 +24,7 @@ from rest_framework.parsers import *
 class BookStaffView(APIView):
     serializer_class = BookStaffSerializer
     parser_classes = [MultiPartParser, FileUploadParser]
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     
     def post(self, request, *args, **kwargs):
         uploded_pages = request.FILES.getlist('page_image')
@@ -104,6 +104,7 @@ class BookUserView(viewsets.ModelViewSet):
     
 class BookRatingListView(APIView):
     serializer_class = BookRatingUserSerializer
+    permission_classes = [AllowAny]
     
     def get(self, request, *args, **kwargs):
         book_id = kwargs.get('book_id')
@@ -117,6 +118,7 @@ class BookRatingListView(APIView):
     
 class BookCommentListView(APIView):
     serializer_class = CommentInfoSerializer
+    permission_classes = [AllowAny]
     
     def get(self, request, *args, **kwargs):
         book_id = kwargs.get('book_id')
