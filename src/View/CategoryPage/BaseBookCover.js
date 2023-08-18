@@ -8,9 +8,10 @@ function BookCard({ book }) {
     return (
         <div onClick={() => {
             navigate(`/bookinfo/${book.book_id}`);
-        }} style={{ width: '188px', padding: '8px', margin: '5px', textAlign: 'left', cursor: 'pointer' }}>
-            {/* <img src={book.image} alt={book.title} style={{ width: '188px', height: '282.99px' }} /> */}
-            <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '7px' }}>
+        }}
+            style={{ width: '188px', padding: '8px', margin: '5px', textAlign: 'left', cursor: 'pointer' }}>
+            <img src={process.env.PUBLIC_URL + `/책표지/${book.title}.jpeg`} alt={book.title} style={{ width: '188px', height: '282.99px' }} />
+            <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '100px' }}>
                 <span style={{ border: '1px solid skyblue', color: 'skyblue', marginRight: '10px', width: '60px', height: '25px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{book.expirationYear}</span>
                 <span style={{ border: '1px solid blue', color: 'blue', width: '60px', height: '25px', borderRadius: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{book.expiration}</span>
             </div>

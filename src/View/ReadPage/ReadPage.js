@@ -486,14 +486,14 @@ function ReadPage() {
   const [comments, setComments] = useState([]);
   const navigate = useNavigate(); // useNavigate hook 사용
   const { bookid } = useParams(); // useParams 훅을 사용하여 URL의 파라미터 값을 가져옵니다.
-  console.log(bookid);
+  // 현재 열려있는 섹션을 나타내는 state (null, 'myComment', 'reference', 'comment')
+  const [openedSection, setOpenedSection] = useState("comment"); // 댓글 섹션을 처음에 보이게 설정
 
 
   useEffect(() => {
     const fetchComments = async () => {
       const data = await GetCommentList(bookid);
       setComments(data);
-      console.log(comments);
     };
 
     fetchComments();
@@ -503,8 +503,7 @@ function ReadPage() {
   const handleGoBack = () => {
     navigate(-1); // 이전 페이지로 이동
   };
-  // 현재 열려있는 섹션을 나타내는 state (null, 'myComment', 'reference', 'comment')
-  const [openedSection, setOpenedSection] = useState("comment"); // 댓글 섹션을 처음에 보이게 설정
+
 
   return (
     <div
@@ -699,11 +698,30 @@ function ReadPage() {
         </div>
         {openedSection === "comment" && (
           <div style={{ margin: "10px 0", marginTop: "30px" }}>
-            {/* 원하는 요소들을 이곳에 추가 */}
-            <CommentComponent
-              page={1}
-              bookid={bookid}
-            ></CommentComponent>
+            {comments.map((comment, index) => (
+              <React.Fragment key={index}>
+                <div
+                  style={{
+                    marginLeft: "30px",
+                    width: '403px',
+                    borderColor: '#DBDBDB',
+                    borderWidth: '1px 2px 1px 2px',
+                    borderStyle: 'solid',
+                    borderTopLeftRadius: index === 0 ? '5px' : '0',
+                    borderBottomLeftRadius: index === comments.length - 1 ? '5px' : '0',
+                    padding: '10px',
+                    boxSizing: 'border-box',
+                    whiteSpace: 'pre-wrap',
+                    marginBottom: index !== comments.length - 1 ? '0' : '20px',
+                    backgroundColor: (index % 2 === 0) ? '#F5F5F5' : 'transparent'
+                  }}>
+                  <div style={{ color: '#3477CF', fontSize: '25px', marginBottom: '15px', textAlign: 'left' }}>
+                    <b>{comment.user_name}</b>: {comment.comment_text.comment}
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+            <CommentComponent page={1} bookid={bookid}></CommentComponent>
           </div>
         )}
       </div>
