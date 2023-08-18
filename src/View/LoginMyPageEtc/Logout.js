@@ -22,7 +22,7 @@ const Logout_ = styled(Link)`
 function Logout() {
 
     const handleLogout = () => {
-        axios.delete('/user/logout/', {
+        axios.delete('http://localhost:8000/user/logout/', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('userToken')}`
             },

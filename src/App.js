@@ -16,16 +16,8 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                isLoggedIn={isLoggedIn}
-                setLoginStatus={setIsLoggedIn}
-              />
-            }
-          />
-          <Route path="/bookinfo/:bookId" element={<BookInfo />} />
+          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} setLoginStatus={setIsLoggedIn} />} />
+          <Route path="/bookinfo/:bookid" element={<BookInfo />} />
           <Route path="/read/:bookid" element={<ReadPage />} />
           <Route path="/user/mypage" element={<MyPage />} />
           <Route path="/loginpage/" element={<LoginPage />} />
