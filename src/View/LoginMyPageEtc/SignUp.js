@@ -21,7 +21,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
     const navigate = useNavigate();
 
-    const signUpURL = 'http://127.0.0.1:8000/user/register/';
+    const signUpURL = '/user/register/';
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지
@@ -36,7 +36,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
         try {
             await axios.post(signUpURL, {
-                'nickname': "nicktest2",
+                'nickname': "nicktest23",
                 'username': nickname,
                 'email': email,
                 'password1': password,

@@ -6,7 +6,7 @@ import axios from 'axios';
 function BookCardListPage() {
     const [booksData, setBooksData] = useState([]); // 서버로부터 받아온 데이터를 저장할 상태
 
-    const serverUrl = "http://127.0.0.1:8000/library/";
+    const serverUrl = "/library/";
 
     useEffect(() => {
         axios.get(serverUrl)

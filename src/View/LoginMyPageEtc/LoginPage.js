@@ -25,12 +25,17 @@ function LoginPage() {
     const navigate = useNavigate();
 
     // const LoginURL = '/user/login/'; // 이건 정식으로 서버에 올리고 URL을 설정하면 사용할 수 있게된다.
-    const LoginURL = 'http://127.0.0.1:8000/user/login/';
-    const MainPageURL = 'http://127.0.0.1:8000/';
+    const LoginURL = '/user/login/';
+    // const MainPageURL = 'http://baobab.kro.kr/';
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지
+
+        if (!email || !password) {
+            alert("이메일과 비밀번호를 모두 입력해주세요.");
+            return;
+        }
 
         try {
             const response = await axios.post(LoginURL, {
@@ -40,27 +45,29 @@ function LoginPage() {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }
-            );
+            });
 
-            const accessToken = response.data.token.access; // 서버에서 받은 access 토큰
+            const accessToken = response.data.token.access;
+            const refreshToken = response.data.token.refresh;
             localStorage.setItem('userToken', accessToken);
-
-
+            localStorage.setItem('userRefreshToken', refreshToken);
             navigate('/');
 
-
-
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setLoginError(true); // 로그인 실패 시, 에러 상태를 true로 설정
-            } else if (error.response.status === 500) {
-                alert("메일 인증 확인 부탁드립니다");
+            if (error.response) {
+                if (error.response.status === 400) {
+                    alert("이메일 또는 비밀번호가 잘못되었습니다."); // 로그인 실패 시, 에러 메시지 변경
+                } else if (error.response.status === 500) {
+                    alert("메일 인증 확인 부탁드립니다");
+                } else {
+                    alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+                }
             } else {
                 console.error("기타 오류", error);
             }
         }
     }
+
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setSelectedBookId(null);  // Reset selected book when changing category

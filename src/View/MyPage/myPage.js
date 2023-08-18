@@ -8,46 +8,74 @@ import BookMark from "./bookMark";
 import LikeBook from "./likeBook";
 import ReadingBook from "./readingBook";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 function MyPage() {
     const [selectedCategory, setSelectedCategory] = useState("닉네임 변경"); // 기본값을 "닉네임 변경"으로 설정
-    const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const navigate = useNavigate();
+    // const MainURL = 'http://baobab.kro.kr/';
     const handleMypageCategoryChange = (category) => {
         setSelectedCategory(category);
     }
+
+    const RefreshURL = "/user/auth/refresh/";
 
     useEffect(() => {
         fetchUserInfo();
     }, []);
 
-    const fetchUserInfo = () => {
+    const fetchUserInfo = async () => {
         const token = localStorage.getItem('userToken');
+        const refreshToken = localStorage.getItem('userRefreshToken');
 
-        axios.get('http://localhost:8000/user/mypage/', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            withCredentials: true
-        })
-            .then(response => {
-                setUserInfo(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setLoading(false);
-                if (error.response && error.response.status === 401) {
-                    // 토큰이 유효하지 않은 경우 로그아웃 처리
-                    localStorage.removeItem('userToken');
-                    setError('토큰이 유효하지 않습니다. 다시 로그인해주세요.');
-                } else {
-                    setError('유저 정보를 가져오는데 실패했습니다.');
-                }
+        try {
+            const response = await axios.get('/user/mypage/', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                withCredentials: true
             });
-    };
 
+            setUserInfo(response.data);
+            setLoading(false);
+
+        } catch (error) {
+            setLoading(false);
+
+            if (error.response && error.response.status === 401) {
+                // 토큰이 유효하지 않은 경우 refresh token으로 로그인 할 수 있게함
+                try {
+                    const response = await axios.post(RefreshURL, {
+                        refresh: refreshToken
+                    }, {
+                        withCredentials: true
+                    });
+                    const accessToken = response.data.access;
+                    console.log("accessToken : " + accessToken);
+                    localStorage.setItem('userToken', accessToken);
+
+                    const refreshTokenNew = response.data.refresh;
+                    localStorage.setItem('userRefreshToken', refreshTokenNew);
+                    alert("in");
+                    // 성공적으로 토큰을 갱신했으므로, 사용자 정보를 다시 요청
+                    fetchUserInfo();
+
+                } catch (error) {
+                    localStorage.removeItem('userToken');
+                    alert("다시 로그인해주세요.");
+                    navigate('/');
+                    setError('토큰이 유효하지 않습니다. 다시 로그인해주세요.');
+                }
+            } else {
+                setError('유저 정보를 가져오는데 실패했습니다.');
+            }
+        }
+    };
 
     const renderCategoryComponent = () => {
         switch (selectedCategory) {
