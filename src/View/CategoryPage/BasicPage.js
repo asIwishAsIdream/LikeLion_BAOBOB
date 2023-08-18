@@ -93,7 +93,7 @@ function BasicPageForm({
   setLoginStatus,
   isClickedSignUp,
   setClickedSignUp,
-  setbookidBP
+  setbookidBP,
 }) {
   // POST 요청 필요
 
@@ -120,8 +120,7 @@ function BasicPageForm({
   // app.jss 에서 전파
   const handlebookidOnBP = (booid) => {
     setbookidBP(booid);
-  }
-
+  };
 
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLoginClick = () => {
@@ -220,7 +219,10 @@ function BasicPageForm({
         <div>
           <SortComponent />
         </div>
-        <BookList onBookClick={onBookClick} setbookidBL={handlebookidOnBP} ></BookList>
+        <BookList
+          //onBookClick={onBookClick}
+          setbookidBL={handlebookidOnBP}
+        ></BookList>
       </div>
     );
   }
