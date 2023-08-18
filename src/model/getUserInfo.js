@@ -3,7 +3,7 @@ import axios from "axios";
 const GetUserInfo = async () => {
     const token = localStorage.getItem('userToken');
     try {
-        const response = await axios.get('http://localhost:8000/user/mypage/', {
+        const response = await axios.get('/user/mypage/', {
             headers: {
                 'Authorization': `Bearer ${token}`
             },

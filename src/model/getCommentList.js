@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const GetCommentList = async (bookid) => {
-    const GetCommentListURL = `http://127.0.0.1:8000/library/detail/${bookid}/comment/list/`;
+    const GetCommentListURL = `/library/detail/${bookid}/comment/list/`;
     // const GetCommentListURL = `http://127.0.0.1:8000/library/detail/18/comment/list/`;
     const token = localStorage.getItem('userToken');
 

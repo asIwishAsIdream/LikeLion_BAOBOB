@@ -14,7 +14,7 @@ import LeftCategories from "./leftCategories";
 import axios from "axios";
 import "./ScrollBar.css";
 
-var bookData = {
+var book = {
   book_id: 123,
 
   book_cover: "/image/book_example.png",
@@ -50,13 +50,12 @@ function BookInfo() {
     setClickedSignUp(false);
   };
 
-
   const { bookid } = useParams();
   console.log("bookID : " + bookid);
   const navigate = useNavigate();
 
   useEffect(() => {
-    var serverUrl = `http://127.0.0.1:8000/library/detail/${bookid}/`;
+    var serverUrl = `/library/detail/${bookid}/`;
 
     axios
       .get(serverUrl)
@@ -90,9 +89,6 @@ function BookInfo() {
           top: 76,
         }}
       >
-
-
-
         <div
           style={{
             position: "absolute",
@@ -104,7 +100,7 @@ function BookInfo() {
             fontSize: "40px",
           }}
         >
-          {bookData.book_name}
+          {book.book_name}
         </div>
         <div
           style={{
@@ -118,7 +114,7 @@ function BookInfo() {
             color: "#545454",
           }}
         >
-          {bookData.author}
+          {book.author}
         </div>
         <div
           className="custom-scrollbar"
@@ -136,7 +132,7 @@ function BookInfo() {
             textAlign: "left",
           }}
         >
-          {bookData.book_introduction}
+          {book.book_introduction}
         </div>
         <img
           src={Published}
@@ -156,7 +152,7 @@ function BookInfo() {
             fontSize: "25px",
           }}
         >
-          {bookData.publication_year}
+          {book.publication_year}
         </div>
         <img
           src={Donated}
@@ -176,10 +172,11 @@ function BookInfo() {
             fontSize: "25px",
           }}
         >
-          {bookData.book_status}
+          {book.book_status}
         </div>
         <img
-          src={process.env.PUBLIC_URL + `/책표지/${book.book_name}.jpeg`} alt={`Cover of ${book.book_name}`}
+          src={process.env.PUBLIC_URL + `/책표지/${book.book_name}.jpeg`}
+          alt={`Cover of ${book.book_name}`}
           style={{ position: "absolute", left: 1356 - 305, top: 186 }}
         />
 
@@ -198,7 +195,7 @@ function BookInfo() {
             fontSize: "26px",
           }}
         >
-          {bookData.average_rating}
+          {book.average_rating}
         </div>
         <img
           src={selectedIcon === "heartclicked" ? HeartClicked : HeartUnclicked}
@@ -218,7 +215,7 @@ function BookInfo() {
             height: 30,
           }}
         >
-          {bookData.like}
+          {book.like}
         </div>
         <img
           src={EmptyButton}

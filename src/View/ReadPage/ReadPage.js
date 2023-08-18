@@ -35,7 +35,7 @@ const bridgeObj = {
   },
 };
 
-var bookData = {
+var book = {
   book_id: 123,
   page_count: 9,
   page_image: "/image/mars/mars (",
@@ -68,11 +68,11 @@ function CanvasRender({ }) {
 
   var startDrawingPoint;
   const [book, setBook] = useState({});
-  const { bookId } = useParams();
+  const { bookid } = useParams();
 
   useEffect(() => {
     const canvasElement = canvasRef.current;
-    var serverUrl = `/library/detail/${bookId}/`;
+    var serverUrl = `/library/detail/${bookid}/`;
 
     axios
       .get(serverUrl)
@@ -118,7 +118,7 @@ function CanvasRender({ }) {
         selectable: false,
       });
 
-      setPage(bookData.page_image, 1, canvas);
+      setPage(book.page_image, 1, canvas);
 
       countObj = {
         get number() {
@@ -126,7 +126,7 @@ function CanvasRender({ }) {
         },
         set number(num) {
           this._num = num;
-          setPage(bookData.page_image, num, canvas);
+          setPage(book.page_image, num, canvas);
         },
       };
 
@@ -470,7 +470,7 @@ function CanvasRender({ }) {
         canvas.renderAll();
       });
     }
-  }, [bookId]);
+  }, [bookid]);
 
   return <canvas ref={canvasRef} />;
 }
@@ -489,7 +489,6 @@ function ReadPage() {
   // 현재 열려있는 섹션을 나타내는 state (null, 'myComment', 'reference', 'comment')
   const [openedSection, setOpenedSection] = useState("comment"); // 댓글 섹션을 처음에 보이게 설정
 
-
   useEffect(() => {
     const fetchComments = async () => {
       const data = await GetCommentList(bookid);
@@ -499,11 +498,9 @@ function ReadPage() {
     fetchComments();
   }, [bookid]); // bookid를 dependency로 추가하는 것이 좋습니다.
 
-
   const handleGoBack = () => {
     navigate(-1); // 이전 페이지로 이동
   };
-
 
   return (
     <div
@@ -536,7 +533,7 @@ function ReadPage() {
           lineHeight: "36px",
         }}
       >
-        {bookData.author}
+        {book.author}
       </div>
       <img
         src={bookmark}
@@ -585,7 +582,7 @@ function ReadPage() {
           color: "#545454",
         }}
       >
-        {"/ " + bookData.page_count}
+        {"/ " + book.page_count}
       </div>
 
       <div
@@ -597,7 +594,7 @@ function ReadPage() {
           fontFamily: "SDB",
         }}
       >
-        {bookData.book_name}
+        {book.book_name}
       </div>
       <img
         src={leftArrow}
@@ -703,19 +700,29 @@ function ReadPage() {
                 <div
                   style={{
                     marginLeft: "30px",
-                    width: '403px',
-                    borderColor: '#DBDBDB',
-                    borderWidth: '1px 2px 1px 2px',
-                    borderStyle: 'solid',
-                    borderTopLeftRadius: index === 0 ? '5px' : '0',
-                    borderBottomLeftRadius: index === comments.length - 1 ? '5px' : '0',
-                    padding: '10px',
-                    boxSizing: 'border-box',
-                    whiteSpace: 'pre-wrap',
-                    marginBottom: index !== comments.length - 1 ? '0' : '20px',
-                    backgroundColor: (index % 2 === 0) ? '#F5F5F5' : 'transparent'
-                  }}>
-                  <div style={{ color: '#3477CF', fontSize: '25px', marginBottom: '15px', textAlign: 'left' }}>
+                    width: "403px",
+                    borderColor: "#DBDBDB",
+                    borderWidth: "1px 2px 1px 2px",
+                    borderStyle: "solid",
+                    borderTopLeftRadius: index === 0 ? "5px" : "0",
+                    borderBottomLeftRadius:
+                      index === comments.length - 1 ? "5px" : "0",
+                    padding: "10px",
+                    boxSizing: "border-box",
+                    whiteSpace: "pre-wrap",
+                    marginBottom: index !== comments.length - 1 ? "0" : "20px",
+                    backgroundColor:
+                      index % 2 === 0 ? "#F5F5F5" : "transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "#3477CF",
+                      fontSize: "25px",
+                      marginBottom: "15px",
+                      textAlign: "left",
+                    }}
+                  >
                     <b>{comment.user_name}</b>: {comment.comment_text.comment}
                   </div>
                 </div>

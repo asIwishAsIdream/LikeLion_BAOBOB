@@ -25,8 +25,8 @@ function LoginPage() {
     const navigate = useNavigate();
 
     // const LoginURL = '/user/login/'; // 이건 정식으로 서버에 올리고 URL을 설정하면 사용할 수 있게된다.
-    const LoginURL = 'http://127.0.0.1:8000/user/login/';
-    const MainPageURL = 'http://127.0.0.1:8000/';
+    const LoginURL = '/user/login/';
+    const MainPageURL = '/';
 
 
     const handleSubmit = async (event) => {

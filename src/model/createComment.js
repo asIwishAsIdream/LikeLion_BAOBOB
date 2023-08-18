@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const CreateComment = async (bookid, page, parentComment_id, comment) => {
-    const CreateURL = `http://127.0.0.1:8000/library/detail/${bookid}/comment/create/`;
+    const CreateURL = `/library/detail/${bookid}/comment/create/`;
     const token = localStorage.getItem('userToken');
 
     try {

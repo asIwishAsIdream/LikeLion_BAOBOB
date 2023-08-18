@@ -18,7 +18,6 @@ function MyPage() {
 
     const navigate = useNavigate();  // <-- 수정된 부분
 
-    const navigate = useNavigate();
     // const MainURL = 'http://baobab.kro.kr/';
     const handleMypageCategoryChange = (category) => {
         setSelectedCategory(category);
@@ -30,7 +29,7 @@ function MyPage() {
     const fetchUserInfo = () => {
         const token = localStorage.getItem('userToken');
 
-        axios.get('http://localhost:8000/user/mypage/', {
+        axios.get('/user/mypage/', {
             headers: {
                 'Authorization': `Bearer ${token}`
             },

@@ -22,7 +22,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
     const navigate = useNavigate();
 
-    const signUpURL = 'http://localhost:8000/user/register/';
+    const signUpURL = '/user/register/';
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지

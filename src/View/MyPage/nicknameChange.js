@@ -16,7 +16,7 @@ function NickNameChange(userInfo) {
     const [newNickname, setNewNickname] = useState(''); // 변경할 닉네임을 저장할 state
 
 
-    const UpdateURL = 'http://localhost:8000/user/mypage/update/';
+    const UpdateURL = '/user/mypage/update/';
 
     const userToken = localStorage.getItem('userToken'); // localStorage를 사용하는 경우
 
