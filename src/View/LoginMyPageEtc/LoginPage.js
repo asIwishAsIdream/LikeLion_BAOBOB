@@ -14,7 +14,7 @@ import ErrorLogin from "../../image/errorOptionLogin.png";
 import LeftCategories from '../leftCategories.js';
 
 
-function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
+function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,38 +25,49 @@ function LoginPage({ isLoggedIn, setIsLoginClicked, setLoginStatus }) {
     const navigate = useNavigate();
 
     // const LoginURL = '/user/login/'; // 이건 정식으로 서버에 올리고 URL을 설정하면 사용할 수 있게된다.
-    const LoginURL = 'http://127.0.0.1:8000/user/login/';
+    const LoginURL = '/user/login/';
+    // const MainPageURL = 'http://baobab.kro.kr/';
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지
 
+        if (!email || !password) {
+            alert("이메일과 비밀번호를 모두 입력해주세요.");
+            return;
+        }
+
         try {
-            await axios.post(LoginURL, {
+            const response = await axios.post(LoginURL, {
                 'email': email,
                 'password': password,
             }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }
-            );
+            });
 
-            // localStorage.setItem("token", access_token);
-            // 로그인 성공 시, 에러 상태를 false로 설정
-            // 화면에 그려지는 걸 변경하기 위해 set 함수를 사용해준다
-            setLoginError(false);
-            setIsLoginClicked(false);
-            setLoginStatus(true);
+            const accessToken = response.data.token.access;
+            const refreshToken = response.data.token.refresh;
+            localStorage.setItem('userToken', accessToken);
+            localStorage.setItem('userRefreshToken', refreshToken);
             navigate('/');
 
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setLoginError(true); // 로그인 실패 시, 에러 상태를 true로 설정
+            if (error.response) {
+                if (error.response.status === 400) {
+                    alert("이메일 또는 비밀번호가 잘못되었습니다."); // 로그인 실패 시, 에러 메시지 변경
+                } else if (error.response.status === 500) {
+                    alert("메일 인증 확인 부탁드립니다");
+                } else {
+                    alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+                }
             } else {
                 console.error("기타 오류", error);
             }
         }
     }
+
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setSelectedBookId(null);  // Reset selected book when changing category

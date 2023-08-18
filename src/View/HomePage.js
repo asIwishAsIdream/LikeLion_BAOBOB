@@ -2,34 +2,34 @@
 import React, { useState, useEffect } from "react";
 import BasicPageForm from "./CategoryPage/BasicPage";
 import LeftCategories from "./leftCategories";
-import BookInfo from "./bookInfo";
-import { useNavigate } from "react-router-dom";
 
 function HomePage({ isLoggedIn, setLoginStatus }) {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [isClickedSignUp, setClickedSignUp] = useState(false);
 
-  const navigate = useNavigate();
 
-  // app.jss 에서 전파
-  const handlebookidOnHP = (bookId) => {
-    const tempUrl = "/bookinfo/" + bookId + "/";
-    navigate(tempUrl);
-  };
+  useEffect(() => {
+    checkLoginStatus();  // 컴포넌트가 마운트될 때 로그인 상태 확인
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
 
-  const handleBookClick = (bookId) => {
-    console.log("in");
-    // 이동
-    navigate("/bookinfo/${bookId}");
-  };
   const resetToInitialState = () => {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
   };
+
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      setLoginStatus(true); // 사용자가 로그인 상태
+      console.log(token);
+    } else {
+      setLoginStatus(false); // 사용자가 로그아웃 상태
+    }
+  }
 
   return (
     <div style={{ height: "1024px", width: "1920px" }}>
@@ -48,12 +48,8 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
       >
         <BasicPageForm
           title={selectedCategory}
-          //onBookClick={handleBookClick}
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
-          setClickedSignUp={setClickedSignUp}
-          isClickedSignUp={isClickedSignUp}
-          setbookidBP={handlebookidOnHP}
         />
       </div>
     </div>

@@ -1,15 +1,13 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
-function BookCard({ book, onBookClick, setbookid }) {
+function BookCard({ book }) {
 
-    // app.jss 에서 전파
-    const handlebookid = (booid) => {
-        setbookid(booid);
-    }
+    const navigate = useNavigate(); // useNavigate hook 사용
 
     return (
         <div onClick={() => {
-            handlebookid(book.book_id)
+            navigate(`/bookinfo/${book.book_id}`);
         }} style={{ width: '188px', padding: '8px', margin: '5px', textAlign: 'left', cursor: 'pointer' }}>
             {/* <img src={book.image} alt={book.title} style={{ width: '188px', height: '282.99px' }} /> */}
             <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '7px' }}>
