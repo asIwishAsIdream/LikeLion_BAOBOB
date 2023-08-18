@@ -4,10 +4,12 @@ from Book.models import BookInfo
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class UserBookLikeView(APIView):
     serializer_class = UserBookLikeCreateSerializer
-        
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
     def post(self, request, *args, **kwargs):
         user_id = self.request.user
         book_id = kwargs.get('book_id')

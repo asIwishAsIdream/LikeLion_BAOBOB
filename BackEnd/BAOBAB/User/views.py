@@ -33,6 +33,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from rest_framework.permissions import IsAuthenticated
 import jwt
 import time
 
@@ -95,8 +96,10 @@ class LoginView(APIView):
             return res
         else:
             return Response({'error' : '존재하지 않는 회원정보입니다.'}, status=status.HTTP_400_BAD_REQUEST)
-class MypageView(APIView):
 
+class MypageView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         try:
             user = request.user
@@ -124,7 +127,9 @@ class MypageView(APIView):
         except(jwt.exceptions.InvalidTokenError):
             # 사용 불가능한 토큰일 때
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
     # 로그아웃
     def delete(self, request):
         # 쿠키에 저장된 토큰 삭제 => 로그아웃 처리
@@ -136,6 +141,7 @@ class LogoutView(APIView):
         return response
 
 class UserUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
     def put(self, request):
         user = request.user
         data_without_password = {k: v for k, v in request.data.items() if k != 'password'}
@@ -161,12 +167,16 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def delete(self, request):
         user = request.user
         user.delete()
         return Response({"detail" : "성공적으로 삭제되었습니다."}, status=status.HTTP_204_NO_CONTENT)
     
 class UserPasswordChangeView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         user = request.user
         password1 = request.data.get('password1')
@@ -178,6 +188,8 @@ class UserPasswordChangeView(APIView):
         return Response({'detail' : '비밀번호가 변경되었습니다.'}, status=status.HTTP_200_OK)
     
 class UserPasswordResetView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         email = request.data.get('email')
         user = get_object_or_404(User, email=email)
@@ -195,6 +207,7 @@ class UserPasswordResetView(APIView):
         return Response(respone, status=status.HTTP_200_OK)
     
 class UserBookLikeView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
         book_like = UserBookLike.objects.filter(user_id=user)
@@ -202,6 +215,8 @@ class UserBookLikeView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserAnnotationView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         user = request.user
         annotation = AnnotationInfo.objects.filter(user_id=user)
@@ -209,6 +224,8 @@ class UserAnnotationView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class UserCommentView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         user = request.user
         comment = CommentInfo.objects.filter(user_id=user)
@@ -216,6 +233,7 @@ class UserCommentView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class UserBookRatingView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
         book_rating = BookRating.objects.filter(user_id=user)
@@ -223,6 +241,8 @@ class UserBookRatingView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserBookMarkView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, *args, **kwargs):
         user = request.user
         book = BookInfo.objects.get(pk=kwargs['pk'])
@@ -231,6 +251,8 @@ class UserBookMarkView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class VerifyEmailView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, *args, **kwargs):
         print(self.kwargs['token'])
         token = self.kwargs['token']

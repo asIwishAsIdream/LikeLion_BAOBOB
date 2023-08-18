@@ -6,11 +6,12 @@ from Book.models import BookInfo, BookFile
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 class CommentCreateView(APIView):
     serializer_class = CommentInfoSerializer
-    
+    parser_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         book_id = kwargs['book_id']
         user_id = request.user
@@ -45,6 +46,7 @@ class CommentCreateView(APIView):
     
 class CommetEditView(APIView):
     serializer_class = CommentInfoSerializer
+    parser_classes = [IsAuthenticatedOrReadOnly]
     
     def put(self, request, *args, **kwargs):
         comment_id = kwargs['comment_id']

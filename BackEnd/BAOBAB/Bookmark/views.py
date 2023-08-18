@@ -6,16 +6,20 @@ from Book.models import BookFile, BookInfo
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 class BookmarkListCreate(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
     
 class BookmarkDestroy(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
     
 class BookmarkView(BookmarkListCreate, BookmarkDestroy):
+    permission_classes = [IsAuthenticated]
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
     

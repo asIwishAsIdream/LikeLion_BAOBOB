@@ -7,9 +7,11 @@ from User.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 class AnnotationCreateView(APIView):
     serializer_class = AnnotationCreateSerializer
+    permission_classes = [IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
         user_id = self.request.user.id
@@ -39,6 +41,7 @@ class AnnotationCreateView(APIView):
         
 class AnnotationListView(APIView):
     serializer_class = AnnotationEditSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, *args, **kwargs):
         user_id = self.request.user.id
