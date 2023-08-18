@@ -89,7 +89,6 @@ function BasicPageForm({
 
   title,
   isLoggedIn,
-
 }) {
   // POST 요청 필요
 

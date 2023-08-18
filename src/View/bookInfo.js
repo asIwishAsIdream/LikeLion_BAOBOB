@@ -31,6 +31,7 @@ var book = {
   book_status: "text",
   created_at: "2021-05-01",
 };
+
 function BookInfo() {
   console.log("in");
   const [book, setBook] = useState({});
@@ -49,7 +50,6 @@ function BookInfo() {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
   };
-
 
   const { bookId } = useParams();
   const navigate = useNavigate();
