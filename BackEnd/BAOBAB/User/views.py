@@ -90,25 +90,21 @@ class LoginView(APIView):
                 status=status.HTTP_200_OK,
             )
             # jwt 토큰 => 쿠키에 저장
-            # res.set_cookie("access", access_token, httponly=True)
-            # res.set_cookie("refresh", refresh_token, httponly=True)
+            res.set_cookie("access", access_token, httponly=True, max_age=300)
+            res.set_cookie("refresh", refresh_token, httponly=True, max_age=300)
             return res
         else:
             return Response({'error' : '존재하지 않는 회원정보입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 class MypageView(APIView):
-    # 유저 정보 확인
+
     def get(self, request):
         try:
-            # access token을 decode 해서 유저 id 추출 => 유저 식별
-            access = request.COOKIES['access']
-            payload = jwt.decode(access, SECRET_KEY, algorithms=['HS256'])
-            pk = payload.get('user_id')
-            user = get_object_or_404(User, pk=pk)
-            serializer = UserSerializer(instance=user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
+            user = request.user
+            serializer = UserSerializer(user)
+            return Response(serializer.data)    
         except(jwt.exceptions.ExpiredSignatureError):
             return Response(status=status.HTTP_401_UNAUTHORIZED) 
+
             # 토큰 만료 시 토큰 갱신
             # data = {'refresh': request.COOKIES.get('refresh', None)}
             # serializer = TokenRefreshSerializer(data=data)
@@ -241,7 +237,7 @@ class VerifyEmailView(APIView):
         decoded_user_id, decoded_email, decoded_timestamp = verify_email_token(token)
         if decoded_timestamp + 60*60 < time.time():
             return Response({'detail' : '이메일 인증 시간이 만료되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-        user = User.object.get(pk=decoded_user_id)
+        user = User.objects.get(pk=decoded_user_id)
         if user.email == decoded_email:
             user.is_active = True
             user.save()

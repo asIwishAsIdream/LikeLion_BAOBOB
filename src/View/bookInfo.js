@@ -31,6 +31,7 @@ var book = {
   book_status: "text",
   created_at: "2021-05-01",
 };
+
 function BookInfo() {
   const [book, setBook] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
@@ -129,6 +130,7 @@ function BookInfo() {
   // const handleReadClick = () => {
   //   navigate(`/read/${bookId}`);
   // };
+
 
   return (
     <div style={{ height: "1024px", width: "1615px" }}>

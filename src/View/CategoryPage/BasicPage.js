@@ -86,14 +86,9 @@ const ScrollButton = styled.button`
 `;
 
 function BasicPageForm({
-  bookId,
+
   title,
-  onBookClick,
   isLoggedIn,
-  setLoginStatus,
-  isClickedSignUp,
-  setClickedSignUp,
-  setbookidBP
 }) {
   // POST 요청 필요
 
@@ -117,21 +112,6 @@ function BasicPageForm({
   // 로그인 임시 여부
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
-  // app.jss 에서 전파
-  const handlebookidOnBP = (booid) => {
-    setbookidBP(booid);
-  }
-
-
-  // 로그인 버튼 클릭 이벤트 핸들러
-  const handleLoginClick = () => {
-    setIsLoginClicked(true); // 여기서 HomePage.js의 로그인 상태를 변경
-  };
-
-  // 회원가입 버튼 클릭 이벤트 핸들러
-  const handleSignUpClick = () => {
-    setClickedSignUp(true);
-  };
 
   const selectCategory = (index) => {
     setSelectedCategoryIndex(index);
@@ -155,75 +135,58 @@ function BasicPageForm({
     );
   }, []);
 
-  if (isLoginClicked) {
-    return (
-      <LoginPage
-        isLoggedIn={isLoggedIn}
-        setIsLoginClicked={setIsLoginClicked}
-        setLoginStatus={setLoginStatus}
-      />
-    );
-  } else if (isClickedSignUp) {
-    return (
-      <SignUpPage
-        isLoggedIn={isLoggedIn}
-        setLoginStatus={setLoginStatus}
-        setClickedSignUp={setClickedSignUp}
-        setIsLoginClicked={setIsLoginClicked}
-      />
-    );
-  } else {
-    return (
-      <div>
-        <Container>
-          <div>
-            <HeadTitle title={title} />
-          </div>
-          <RightSection>
-            <SearchBar />
-            {isLoggedIn ? (
-              <>
-                <MyPageTag />
-                <Divider>|</Divider>
-                <Logout />
-              </>
-            ) : (
-              <>
-                <Login_ />
-                <Divider>|</Divider>
-                <SignUp />
-              </>
-            )}
-          </RightSection>
-        </Container>
-        <ScrollButton
-          show={showLeftArrow}
-          direction="left"
-          onClick={() => handleScroll(-100)}
-        />
-        <ScrollContainer ref={scrollContainerRef}>
-          {small_category_title.map((category, index) => (
-            <SmallCategoryBar
-              key={index}
-              selected={index === selectedCategoryIndex}
-              onClick={() => selectCategory(index)}
-            >
-              {category}
-            </SmallCategoryBar>
-          ))}
-        </ScrollContainer>
-        <ScrollButton
-          show={showRightArrow}
-          direction="right"
-          onClick={() => handleScroll(100)}
-        />
+
+  return (
+    <div>
+      <Container>
         <div>
-          <SortComponent />
+          <HeadTitle title={title} />
         </div>
-        <BookList onBookClick={onBookClick} setbookidBL={handlebookidOnBP} ></BookList>
+        <RightSection>
+          <SearchBar />
+          {isLoggedIn ? (
+            <>
+              <MyPageTag />
+              <Divider>|</Divider>
+              <Logout />
+            </>
+          ) : (
+            <>
+              <Login_ />
+              <Divider>|</Divider>
+              <SignUp />
+            </>
+          )}
+        </RightSection>
+      </Container>
+      <ScrollButton
+        show={showLeftArrow}
+        direction="left"
+        onClick={() => handleScroll(-100)}
+      />
+      <ScrollContainer ref={scrollContainerRef}>
+        {small_category_title.map((category, index) => (
+          <SmallCategoryBar
+            key={index}
+            selected={index === selectedCategoryIndex}
+            onClick={() => selectCategory(index)}
+          >
+            {category}
+          </SmallCategoryBar>
+        ))}
+      </ScrollContainer>
+      <ScrollButton
+        show={showRightArrow}
+        direction="right"
+        onClick={() => handleScroll(100)}
+      />
+      <div>
+        <SortComponent />
       </div>
-    );
-  }
+      <BookList ></BookList>
+    </div>
+  );
+
 }
 
 export default BasicPageForm;

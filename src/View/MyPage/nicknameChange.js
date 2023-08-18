@@ -66,6 +66,7 @@ function NickNameChange(userInfo) {
         return 1100 + (30 * byteLength); // 기존 코드에서 폰트 크기에 따른 조절값을 조정함
     };
 
+
     return (
         <div>
             <img
@@ -91,6 +92,7 @@ function NickNameChange(userInfo) {
                 style={{ position: "relative", left: calculateNimTextPosition(usernameData), top: 326 }}
             // usernameData의 길이와 30px 폰트 크기를 고려하여 hello 이미지의 위치를 조정합니다.
             />
+
 
             <img
                 src={nickname}
