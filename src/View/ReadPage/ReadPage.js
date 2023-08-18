@@ -38,7 +38,7 @@ const bridgeObj = {
 var book = {
   book_id: 123,
   page_count: 9,
-  page_image: "/image/mars/mars (",
+  page_image: "/image/mars/pages/mars (3).png",
   book_cover: "/image/book_example.png",
   mainCategory_id: 1,
   subCategory_id: 2,
@@ -95,7 +95,9 @@ function CanvasRender({}) {
       if (curP) canvas.clear();
       var img = new Image(); //페이지 로드
       var temp = src.split("(");
+
       temp = temp[0] + "(";
+      temp.replace("http://127.0.0.1:8000", "");
       img.src = process.env.PUBLIC_URL + temp + num + ").png";
       img.onload = function () {
         var fabricImage = new fabric.Image(img, {

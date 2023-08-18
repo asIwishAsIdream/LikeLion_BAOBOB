@@ -85,11 +85,7 @@ const ScrollButton = styled.button`
   }}
 `;
 
-function BasicPageForm({
-
-  title,
-  isLoggedIn,
-}) {
+function BasicPageForm({ title, isLoggedIn }) {
   // POST 요청 필요
 
   const categories = [
@@ -112,7 +108,6 @@ function BasicPageForm({
   // 로그인 임시 여부
   const [isLoginClicked, setIsLoginClicked] = useState(false);
 
-
   const selectCategory = (index) => {
     setSelectedCategoryIndex(index);
   };
@@ -122,8 +117,8 @@ function BasicPageForm({
     setShowLeftArrow(scrollContainerRef.current.scrollLeft > 0);
     setShowRightArrow(
       scrollContainerRef.current.scrollLeft <
-      scrollContainerRef.current.scrollWidth -
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.scrollWidth -
+          scrollContainerRef.current.clientWidth
     );
   };
 
@@ -131,10 +126,9 @@ function BasicPageForm({
     setShowLeftArrow(false);
     setShowRightArrow(
       scrollContainerRef.current.scrollWidth >
-      scrollContainerRef.current.clientWidth
+        scrollContainerRef.current.clientWidth
     );
   }, []);
-
 
   return (
     <div>
@@ -183,10 +177,9 @@ function BasicPageForm({
       <div>
         <SortComponent />
       </div>
-      <BookList ></BookList>
+      <BookList></BookList>
     </div>
   );
-
 }
 
 export default BasicPageForm;
