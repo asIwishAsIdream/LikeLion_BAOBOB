@@ -31,6 +31,7 @@ var book = {
   book_status: "text",
   created_at: "2021-05-01",
 };
+
 function BookInfo() {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [selectedBookId, setSelectedBookId] = useState(null);
@@ -46,10 +47,10 @@ function BookInfo() {
     setClickedSignUp(false);
   };
 
-  const bookId = useParams();
-
-  var serverUrl = "http://127.0.0.1:8000/detail/"; // 실제 백엔드 서버 URL로 바꿔주세요
-  serverUrl += bookId + "/";
+  const bookId = 6; //useParams();
+  var serverUrl = "http://127.0.0.1:8000/library/detail/"; // 실제 백엔드 서버 URL로 바꿔주세요
+  serverUrl = serverUrl + bookId + "/";
+  alert(serverUrl);
   const navigate = useNavigate(); // useNavigate hook 사용
   const [selectedIcon, setSelectedIcon] = useState(null);
   // 뒤로 가기 함수 정의

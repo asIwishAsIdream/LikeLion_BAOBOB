@@ -11,15 +11,47 @@ import leftArrow from "../../image/leftArrow.png";
 import logo from "../../image/Group 154.png";
 import bookmark from "../../image/bookmarks_simple_fill_icon.png";
 import CommentComponent from "./Comment";
+import editBox from "../../image/Rectangle 34.png";
 import "../ScrollBar.css";
 import "./ReadPage.css";
 import { fabric } from "fabric";
+import { render } from "@testing-library/react";
+import plusAnnotation from "../../image/Group 118.png";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import { click } from "@testing-library/user-event/dist/click";
 
-var rectArray = [];
+var rectTag = 0;
 var canvas;
 var drawHighlight = false;
 var deleteHighlight = false;
 var rect;
+var isWriting = false;
+var textBoxArray = [];
+var tb = {
+  obj: null,
+  connectedRectId: 0,
+};
+
+const plusButton = new fabric.Image(null, {
+  selectable: false,
+});
+var isPlusOn = false;
+var tempGroup;
+const imgObj = new Image();
+imgObj.src = plusAnnotation; // 이미지 URL을 지정해주세요.
+imgObj.onload = function () {
+  plusButton.setElement(imgObj);
+};
+
+const eb = new fabric.Image(null, {
+  selectable: false,
+});
+
+const tempImg = new Image();
+tempImg.src = editBox; // 이미지 URL을 지정해주세요.
+tempImg.onload = function () {
+  eb.setElement(tempImg);
+};
 
 function CanvasRender({}) {
   const canvasRef = useRef(null);
@@ -32,10 +64,10 @@ function CanvasRender({}) {
 
     if (canvasElement) {
       canvas = new fabric.Canvas(canvasElement, {
-        selection: false, // 마우스 드래그로 여러 오브젝트를 선택할 수 없도록 설정
         width: 1202,
         height: 1550,
         position: "absolute",
+        selection: "single",
       });
 
       const fabricImage = new fabric.Image(null, {
@@ -46,33 +78,275 @@ function CanvasRender({}) {
       imgObj.src = page1; // 이미지 URL을 지정해주세요.
       imgObj.onload = function () {
         fabricImage.setElement(imgObj);
+        fabricImage.set({
+          selectable: false,
+        });
         canvas.add(fabricImage);
         canvas.sendToBack(fabricImage);
       };
 
+      canvas.on("object:scaling", function (e) {
+        var scaledObject = e.target;
+        if (scaledObject.type === "rect" || scaledObject.type === "group") {
+          scaledObject.set({
+            scaleY: 1, // Lock the vertical scaling
+          });
+        }
+      });
+
+      canvas.on("object:modified", function (e) {
+        var eventObject = e.target;
+        if (!eventObject) return;
+        if (eventObject.type === "rect" || eventObject.type === "group") {
+          tempGroup.set({
+            left: eventObject.left + eventObject.width * eventObject.scaleX + 5,
+            top: eventObject.top - 55,
+          });
+          canvas.renderAll();
+        }
+      });
+
+      canvas.on("mouse:over", function (e) {
+        var eventObject = e.target;
+        if (!eventObject) return;
+        if (eventObject.type === null) return;
+        if (eventObject.type === "image") return;
+        if (isWriting) return;
+        if (eventObject.type === "rect" || eventObject.type === "group") {
+          var yesAnnotation = false;
+          var obb;
+          textBoxArray.forEach((ob, index) => {
+            if (ob.connectedRectId == eventObject.id) {
+              yesAnnotation = true;
+              obb = ob;
+            }
+          });
+          if (yesAnnotation) {
+            eb.set({
+              selectable: false,
+              left:
+                eventObject.left + eventObject.width * eventObject.scaleX + 30,
+              top: eventObject.top - 70,
+            });
+
+            textBox = obb.obj;
+            textBox.set({
+              left:
+                eventObject.left + eventObject.width * eventObject.scaleX + 40,
+              top: eventObject.top - 55,
+              width: 100, // 너비 조절
+              fontSize: 20,
+              fill: "black",
+              fontFamily: "SDSB",
+            });
+            tempGroup = new fabric.Group([eb, textBox], {
+              left:
+                eventObject.left + eventObject.width * eventObject.scaleX + 5,
+              top: eventObject.top - 55,
+            });
+          } else {
+            var xmin =
+              eventObject.left + eventObject.width * eventObject.scaleX;
+            var ymin = eventObject.top - 30;
+            plusButton.set({
+              left: xmin,
+              top: ymin,
+              width: 30,
+              height: 30,
+            });
+            canvas.remove(tempGroup);
+            tempGroup = plusButton;
+
+            isPlusOn = true;
+          }
+
+          tempGroup.bringToFront();
+          canvas.add(tempGroup);
+
+          canvas.renderAll();
+        }
+      });
+
+      canvas.on("mouse:out", function (e) {
+        if (isWriting) return;
+        var eventObject = e.target;
+        if (!eventObject) return;
+        if (eventObject.type === null) return; // 이미지에 마우스가 올라가면 하이라이트 안되게)
+        if (eventObject.type === "image") return;
+
+        if (eventObject.type === "rect" || eventObject.type === "group") {
+          if (tempGroup != null) canvas.remove(tempGroup);
+          tempGroup = null;
+          isPlusOn = false;
+          canvas.renderAll();
+        }
+      });
+
+      var clickedObject;
+      var textBox;
+      var numBox;
+      canvas.on("mouse:up", (event) => {
+        if (isDrawing) {
+          isDrawing = false;
+        } else {
+          var pointer = canvas.getPointer(event.e);
+          clickedObject = canvas.findTarget(pointer, (obj) => obj.selectable);
+          if (clickedObject.type === "rect" || clickedObject.type === "group") {
+            // 텍스트 박스 생성
+            if (deleteHighlight) {
+              canvas.remove(clickedObject);
+              for (var i = 0; i < textBoxArray.length; i++) {
+                if (textBoxArray[i].connectedRectId == clickedObject.id) {
+                  textBoxArray.splice(i, 1);
+
+                  break;
+                }
+              }
+              canvas.renderAll();
+              return;
+            }
+            if (clickedObject.type === "group") return;
+            textBoxArray.forEach((ob, index) => {
+              if (ob.connectedRectId == clickedObject.id) {
+                return;
+              }
+            });
+
+            isWriting = true;
+            if (tempGroup != null) canvas.remove(tempGroup);
+            numBox = new fabric.IText("[" + textBoxArray.length + "]", {
+              left:
+                clickedObject.left + clickedObject.width * clickedObject.scaleX,
+              top: clickedObject.top - 30,
+              width: 30, // 너비 조절
+              fontSize: 20,
+              fill: "#244F8D",
+              fontFamily: "SDEB",
+            });
+            textBox = new fabric.IText("주석 남기기", {
+              left:
+                clickedObject.left +
+                clickedObject.width * clickedObject.scaleX +
+                40,
+              top: clickedObject.top - 65,
+              width: 100, // 너비 조절
+              fontSize: 20,
+              fill: "black",
+              fontFamily: "SDSB",
+            });
+
+            eb.set({
+              selectable: false,
+              left:
+                clickedObject.left +
+                clickedObject.width * clickedObject.scaleX +
+                30,
+              top: clickedObject.top - 80,
+            });
+
+            eb.src = editBox;
+            canvas.add(eb);
+            canvas.add(numBox);
+            canvas.add(textBox);
+
+            textBox.enterEditing();
+            canvas.renderAll();
+          }
+        }
+      });
+
       canvas.on("mouse:down", (event) => {
+        var pointer = canvas.getPointer(event.e);
+
         if (drawHighlight) {
           isDrawing = true;
-          var pointer = canvas.getPointer(event.e);
           startDrawingPoint = new fabric.Point(pointer.x, pointer.y);
 
           rect = new fabric.Rect({
+            id: rectTag,
             left: startDrawingPoint.x,
             top: startDrawingPoint.y,
             width: 0,
             height: 30,
             fill: "#FFC701",
             opacity: 0.3,
-            selection: true,
             selectable: true,
           });
           canvas.add(rect);
-          rectArray.push(rect);
+          rectTag++;
         }
       });
 
-      canvas.on("mouse:up", () => {
-        isDrawing = false;
+      canvas.on("selection:updated", function (event) {
+        var tbt = Object.create(tb);
+
+        if (numBox == null) return;
+
+        canvas.remove(eb);
+        tbt.obj = textBox;
+        tbt.connectedRectId = clickedObject.id;
+        textBoxArray.push(tbt);
+
+        textBox.exitEditing();
+        canvas.remove(textBox);
+        var grp = new fabric.Group([numBox, clickedObject], {
+          id: clickedObject.id,
+          left: clickedObject.left,
+          top: clickedObject.top - 30,
+        });
+
+        canvas.remove(clickedObject);
+        canvas.remove(numBox);
+        if (grp != null) canvas.add(grp);
+        canvas.renderAll();
+        numBox = null;
+        textBox = null;
+        clickedObject = null;
+        isWriting = false;
+      });
+
+      canvas.on("selection:cleared", function (event) {
+        var tbt = Object.create(tb);
+
+        if (numBox == null) return;
+
+        canvas.remove(eb);
+        tbt.connectedRectId = clickedObject.id;
+
+        tbt.obj = textBox;
+        textBoxArray.push(tbt);
+
+        textBox.exitEditing();
+
+        canvas.remove(textBox);
+        var grp = new fabric.Group([numBox, clickedObject], {
+          id: clickedObject.id,
+          left: clickedObject.left,
+          top: clickedObject.top - 30,
+        });
+        canvas.remove(clickedObject);
+        canvas.remove(numBox);
+        if (grp != null) canvas.add(grp);
+        canvas.renderAll();
+        numBox = null;
+        textBox = null;
+        clickedObject = null;
+        isWriting = false;
+      });
+
+      canvas.on("selection:created", function (event) {
+        if (event.target == null) return;
+        if (event.target.type === "image") {
+          canvas.deactivateAll().renderAll();
+        }
+      });
+
+      canvas.on("object:moving", function (e) {
+        var eventObject = e.target;
+        if (!eventObject) return;
+        if (eventObject.type === "rect" || eventObject.type === "group") {
+          canvas.remove(tempGroup);
+        }
       });
 
       canvas.on("mouse:move", (event) => {
@@ -91,10 +365,7 @@ function CanvasRender({}) {
 
   return <canvas ref={canvasRef} />;
 }
-function deleteHigh() {
-  canvas.remove(rectArray.pop());
-  canvas.requestRenderAll();
-}
+
 function ReadPage() {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const navigate = useNavigate(); // useNavigate hook 사용
@@ -197,6 +468,9 @@ function ReadPage() {
             className="icon icon-pencil"
             onClick={() => {
               drawHighlight = selectedIcon === "pencil" ? false : true;
+              if (deleteHighlight) {
+                deleteHighlight = false;
+              }
               setSelectedIcon(selectedIcon === "pencil" ? null : "pencil");
             }}
           />
@@ -206,8 +480,10 @@ function ReadPage() {
             className="icon icon-eraser"
             onClick={() => {
               deleteHighlight = selectedIcon === "eraser" ? false : true;
-              deleteHigh();
-              //setSelectedIcon(selectedIcon === "eraser" ? null : "eraser");
+              if (drawHighlight) {
+                drawHighlight = false;
+              }
+              setSelectedIcon(selectedIcon === "eraser" ? null : "eraser");
             }}
           />
         </div>

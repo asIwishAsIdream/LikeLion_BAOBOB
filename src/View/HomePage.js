@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import BasicPageForm from "./CategoryPage/BasicPage";
 import LeftCategories from "./leftCategories";
 import BookInfo from "./bookInfo";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 function HomePage({ isLoggedIn, setLoginStatus }) {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
@@ -14,19 +13,19 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
   // app.jss 에서 전파
   const handlebookidOnHP = (bookId) => {
-    navigate(`/bookinfo/${bookId}`);
-  }
-
+    const tempUrl = "/bookinfo/" + bookId + "/";
+    navigate(tempUrl);
+  };
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-  }
+  };
 
   const handleBookClick = (bookId) => {
     console.log("in");
     // 이동
-    navigate('/bookinfo/${bookId}');
-  }
+    navigate("/bookinfo/${bookId}");
+  };
   const resetToInitialState = () => {
     setSelectedCategory("주간 인기 책");
     setClickedSignUp(false);
@@ -47,18 +46,15 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
           top: 0,
         }}
       >
-
         <BasicPageForm
           title={selectedCategory}
-          onBookClick={handleBookClick}
+          //onBookClick={handleBookClick}
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
           setClickedSignUp={setClickedSignUp}
           isClickedSignUp={isClickedSignUp}
           setbookidBP={handlebookidOnHP}
         />
-
-
       </div>
     </div>
   );
