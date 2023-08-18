@@ -32,7 +32,6 @@ var book = {
   created_at: "2021-05-01",
 };
 function BookInfo() {
-  console.log("in");
   const [book, setBook] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [isClickedSignUp, setClickedSignUp] = useState(false);
@@ -51,11 +50,12 @@ function BookInfo() {
   };
 
 
-  const { bookId } = useParams();
+  const { bookid } = useParams();
+  console.log("bookID : " + bookid);
   const navigate = useNavigate();
 
   useEffect(() => {
-    var serverUrl = `http://127.0.0.1:8000/library/detail/${bookId}/`;
+    var serverUrl = `http://127.0.0.1:8000/library/detail/${bookid}/`;
 
     axios.get(serverUrl)
       .then(response => {
@@ -64,14 +64,14 @@ function BookInfo() {
       .catch(error => {
         console.error("There was a problem with the request:", error);
       });
-  }, [bookId]);
+  }, [bookid]);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
   const handleReadClick = () => {
-    navigate(`/read/${bookId}`);
+    navigate(`/read/${bookid}`);
   };
   // const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   // const [selectedBookId, setSelectedBookId] = useState(null);

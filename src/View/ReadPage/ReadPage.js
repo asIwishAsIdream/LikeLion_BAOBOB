@@ -1,6 +1,7 @@
 // ReadPage.js
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
 import page1 from "../../image/1page.png";
 import pencil from "../../image/pencil_simple_line_fill_icon.png";
 import pencilBlue from "../../image/pencil_blue.png";
@@ -10,10 +11,13 @@ import downArrow from "../../image/down_arrow.png";
 import leftArrow from "../../image/leftArrow.png";
 import logo from "../../image/Group 154.png";
 import bookmark from "../../image/bookmarks_simple_fill_icon.png";
+
 import CommentComponent from "./Comment";
+import GetCommentList from "../../model/getCommentList";
+import { fabric } from "fabric";
+
 import "../ScrollBar.css";
 import "./ReadPage.css";
-import { fabric } from "fabric";
 
 var rectArray = [];
 var canvas;
@@ -21,7 +25,7 @@ var drawHighlight = false;
 var deleteHighlight = false;
 var rect;
 
-function CanvasRender({}) {
+function CanvasRender({ }) {
   const canvasRef = useRef(null);
 
   var isDrawing = false;
@@ -97,7 +101,23 @@ function deleteHigh() {
 }
 function ReadPage() {
   const [selectedIcon, setSelectedIcon] = useState(null);
+  const [comments, setComments] = useState([]);
   const navigate = useNavigate(); // useNavigate hook 사용
+  const { bookid } = useParams(); // useParams 훅을 사용하여 URL의 파라미터 값을 가져옵니다.
+  console.log(bookid);
+
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const data = await GetCommentList(bookid);
+      setComments(data);
+      console.log(comments);
+    };
+
+    fetchComments();
+  }, [bookid]); // bookid를 dependency로 추가하는 것이 좋습니다.
+
+
   const handleGoBack = () => {
     navigate(-1); // 이전 페이지로 이동
   };
@@ -257,7 +277,7 @@ function ReadPage() {
             {/* 원하는 요소들을 이곳에 추가 */}
             <CommentComponent
               page={1}
-              nickname="UserNickname"
+              bookid={bookid}
             ></CommentComponent>
           </div>
         )}

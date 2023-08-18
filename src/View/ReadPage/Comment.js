@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import GetUserInfo from '../../model/getUserInfo';
+import CreateComment from '../../model/createComment';
+
 import rightArrow from '../../image/rightArrow_comment_pagenation.png';
 import leftArrow from '../../image/leftArrow_comment_pagenation.png';
 import filledHeart from '../../image/filled_heart.png';
 import emptyheart from '../../image/empty_heart.png';
 import recomment_arrow from '../../image/recomment_arrow.png';
+import { async } from 'q';
 
 const COMMENTS_PER_PAGE = 10;
 const VISIBLE_COMMENTS = 4;
 
 
 
-const CommentComponent = ({ page, nickname }) => {
+const CommentComponent = ({ bookid, page }) => {
     const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState('');  // 댓글 입력을 위한 상태
     const [replyContent, setReplyContent] = useState('');  // 답글 입력을 위한 상태
     const [currentPage, setCurrentPage] = useState(1);
     const [replyTo, setReplyTo] = useState(null);
+    const [userNickname, setUserNickName] = useState(' ');
 
     const totalPages = Math.ceil(comments.length / COMMENTS_PER_PAGE);
 
@@ -28,6 +33,23 @@ const CommentComponent = ({ page, nickname }) => {
         return `${pad(now.getFullYear().toString().substr(-2))}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
     };
 
+    // get userInfo
+    const handleUserInfo = async () => {
+        try {
+            const userInfo = await GetUserInfo();
+            setUserNickName(userInfo.nickname);
+            console.log(userInfo.nickname);
+            console.log(userInfo);
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+    useEffect(() => {
+        // 유저 정보 가저오고 보기
+        handleUserInfo();
+
+    }, []);
 
     const handleReplySubmit = () => {
         if (!replyContent.trim()) {
@@ -40,8 +62,10 @@ const CommentComponent = ({ page, nickname }) => {
             return;
         }
 
+
+
         const newReply = {
-            nickname,
+            nickname: userNickname,
             replyContent,
             time: currentDateTime()
         };
@@ -52,6 +76,7 @@ const CommentComponent = ({ page, nickname }) => {
         }
         updatedComments[replyTo].replies.push(newReply);
 
+
         setComments(updatedComments);
         setReplyContent('');
         setReplyTo(null); // 답글 제출 후 답글 입력창 숨김
@@ -59,7 +84,7 @@ const CommentComponent = ({ page, nickname }) => {
 
     const newComment = {
         page,
-        nickname,
+        nickname: userNickname,
         commentContent,
         time: currentDateTime(),
         likes: 0, // 초기 좋아요 수
@@ -68,7 +93,7 @@ const CommentComponent = ({ page, nickname }) => {
 
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         try {
             if (!commentContent.trim()) {
                 alert("댓글이 없습니다.");
@@ -80,15 +105,20 @@ const CommentComponent = ({ page, nickname }) => {
                 return;
             }
 
-            const newComment = {
-                page,
-                nickname,
-                commentContent,
-                time: currentDateTime()
-            };
+            const response = await CreateComment(bookid, page, null, commentContent);
 
-            setComments([...comments, newComment]);
-            setCommentContent('');
+            if (response.message === "댓글 작성 성공") {
+                const newComment = {
+                    page,
+                    nickname: userNickname,
+                    commentContent,
+                    time: currentDateTime()
+                };
+                setComments([...comments, newComment]);
+                setCommentContent('');
+            } else {
+                alert("댓글 작성 실패!");
+            }
 
         } catch (error) {
             alert("오류가 발생했습니다.");
