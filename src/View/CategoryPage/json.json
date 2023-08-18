@@ -4,20 +4,20 @@
         "page_image": [
             {
                 "file_id": 2,
-                "page_image": "http://127.0.0.1:8000/media/sampleBook/pages/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-04_202558.png",
+                "page_image": "https://baobab.kro.kr/media/sampleBook/pages/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-04_202558.png",
                 "page_num": 1,
                 "book_id": 6
             },
             {
                 "file_id": 3,
-                "page_image": "http://127.0.0.1:8000/media/sampleBook/pages/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-04_204215.png",
+                "page_image": "https://baobab.kro.kr/media/sampleBook/pages/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-04_204215.png",
                 "page_num": 2,
                 "book_id": 6
             }
         ],
         "book_cover": {
             "id": 2,
-            "book_cover": "http://127.0.0.1:8000/media/sampleBook/cover/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-10_153427.png",
+            "book_cover": "https://baobab.kro.kr/media/sampleBook/cover/20230808_180109_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-10_153427.png",
             "book_id": 6
         },
         "book_name": "sampleBook",
@@ -37,26 +37,26 @@
         "page_image": [
             {
                 "file_id": 7,
-                "page_image": "http://127.0.0.1:8000/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-17_145253.png",
+                "page_image": "https://baobab.kro.kr/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-17_145253.png",
                 "page_num": 1,
                 "book_id": 8
             },
             {
                 "file_id": 8,
-                "page_image": "http://127.0.0.1:8000/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-18_133829.png",
+                "page_image": "https://baobab.kro.kr/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-18_133829.png",
                 "page_num": 2,
                 "book_id": 8
             },
             {
                 "file_id": 9,
-                "page_image": "http://127.0.0.1:8000/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-18_140637.png",
+                "page_image": "https://baobab.kro.kr/media/TestBook/pages/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-18_140637.png",
                 "page_num": 3,
                 "book_id": 8
             }
         ],
         "book_cover": {
             "id": 4,
-            "book_cover": "http://127.0.0.1:8000/media/TestBook/cover/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-05_020323.png",
+            "book_cover": "https://baobab.kro.kr/media/TestBook/cover/20230809_052501_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-07-05_020323.png",
             "book_id": 8
         },
         "book_name": "TestBook",

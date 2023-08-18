@@ -1,19 +1,16 @@
 // App.js
+import React, { useState } from "react";
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./View/HomePage";
-import BookInfo from './View/bookInfo.js';  // bookinfo.js의 경로를 지정하세요
-import ReadPage from './View/ReadPage/ReadPage.js';
-import MyPage from './View/MyPage/myPage';
-import LoginPage from './View/LoginMyPageEtc/LoginPage';
-import SignUpPage from './View/LoginMyPageEtc/SignUp';
+import BookInfo from "./View/bookInfo.js"; // bookinfo.js의 경로를 지정하세요
+import ReadPage from "./View/ReadPage/ReadPage.js";
+import MyPage from "./View/MyPage/myPage";
+import LoginPage from "./View/LoginMyPageEtc/LoginPage";
+import SignUpPage from "./View/LoginMyPageEtc/SignUp";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 
   return (
     <Router>

@@ -18,6 +18,8 @@ function MyPage() {
 
     const navigate = useNavigate();  // <-- 수정된 부분
 
+    const navigate = useNavigate();
+    // const MainURL = 'http://baobab.kro.kr/';
     const handleMypageCategoryChange = (category) => {
         setSelectedCategory(category);
     }
@@ -25,7 +27,6 @@ function MyPage() {
     useEffect(() => {
         fetchUserInfo();
     }, []);
-
     const fetchUserInfo = () => {
         const token = localStorage.getItem('userToken');
 

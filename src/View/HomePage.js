@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import BasicPageForm from "./CategoryPage/BasicPage";
 import LeftCategories from "./leftCategories";
 
-
 function HomePage({ isLoggedIn, setLoginStatus }) {
   const [selectedCategory, setSelectedCategory] = useState("주간 인기 책");
   const [isClickedSignUp, setClickedSignUp] = useState(false);
@@ -15,7 +14,7 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-  }
+  };
 
   const resetToInitialState = () => {
     setSelectedCategory("주간 인기 책");
@@ -47,14 +46,11 @@ function HomePage({ isLoggedIn, setLoginStatus }) {
           top: 0,
         }}
       >
-
         <BasicPageForm
           title={selectedCategory}
           isLoggedIn={isLoggedIn}
           setLoginStatus={setLoginStatus}
         />
-
-
       </div>
     </div>
   );
