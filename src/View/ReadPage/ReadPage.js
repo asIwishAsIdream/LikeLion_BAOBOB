@@ -94,7 +94,9 @@ function CanvasRender({}) {
     function setPage(src, num, canvas) {
       if (curP) canvas.clear();
       var img = new Image(); //페이지 로드
-      img.src = process.env.PUBLIC_URL + src + num + ").png";
+      var temp = src.split("(");
+      temp = temp[0] + "(";
+      img.src = process.env.PUBLIC_URL + temp + num + ").png";
       img.onload = function () {
         var fabricImage = new fabric.Image(img, {
           left: 0,
