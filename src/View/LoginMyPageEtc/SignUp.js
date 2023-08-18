@@ -6,12 +6,13 @@ import LeftCategories from '../leftCategories';
 import signupText from "../../image/signupText.png";
 import signUpBtn from "../../image/signupBtn.png";
 import signup_component from "../../image/signup_component.png";
-import successedSignUp from "../../image/successedSignUp.png";
+import signUpGroup from "../../image/signUpGroup.png";
 import passwordIsNotSame from "../../image/passwordIsNotSame.png";
 import './SignUp.css';
 
 function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginClicked }) {
     const [nickname, setNickname] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,7 +22,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
     const navigate = useNavigate();
 
-    const signUpURL = '/user/register/';
+    const signUpURL = 'http://localhost:8000/user/register/';
 
     const handleSubmit = async (event) => {
         event.preventDefault();  // Form의 자동 제출을 방지
@@ -36,8 +37,8 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
 
         try {
             await axios.post(signUpURL, {
-                'nickname': "nicktest23",
-                'username': nickname,
+                'nickname': nickname,
+                'username': username,
                 'email': email,
                 'password1': password,
                 'password2': confirmPassword
@@ -88,8 +89,8 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                 />
 
                 <img
-                    src={signup_component}
-                    alt="signup_component"
+                    src={signUpGroup}
+                    alt="signUpGroup"
                     style={{ position: "absolute", left: 750 - 304.5, top: 243 }}
                 />
 
@@ -105,6 +106,24 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
+                        placeholder="이름을 입력하세요"
+                        className="input-placeholder-color"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                        style={{
+                            position: "absolute",
+                            left: 975 - 304.5,
+                            top: 261,
+                            border: 'none', // 테두리 제거
+                            outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
+                            fontSize: '22px', // placeholder 글꼴 크기
+                            width: '350px', // 너비 조절
+
+
+                        }}
+                    />
+                    <input
+                        type="text"
                         placeholder="닉네임을 입력하세요"
                         className="input-placeholder-color"
                         value={nickname}
@@ -112,7 +131,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                         style={{
                             position: "absolute",
                             left: 975 - 304.5,
-                            top: 260,
+                            top: 371,
                             border: 'none', // 테두리 제거
                             outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
                             fontSize: '22px', // placeholder 글꼴 크기
@@ -130,7 +149,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                         style={{
                             position: "absolute",
                             left: 975 - 304.5,
-                            top: 391,
+                            top: 480,
                             border: 'none', // 테두리 제거
                             outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
                             fontSize: '22px', // placeholder 글꼴 크기
@@ -148,7 +167,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                         style={{
                             position: "absolute",
                             left: 975 - 304.5,
-                            top: 522,
+                            top: 590,
                             border: 'none', // 테두리 제거
                             outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
                             fontSize: '22px', // placeholder 글꼴 크기
@@ -167,7 +186,7 @@ function SignUpPage({ isLoggedIn, setLoginStatus, setClickedSignUp, setIsLoginCl
                         style={{
                             position: "absolute",
                             left: 975 - 304.5,
-                            top: 653,
+                            top: 701,
                             border: 'none', // 테두리 제거
                             outline: 'none', // 테두리 없애기 위해 추가 (포커스 시 보이는 테두리 제거)
                             fontSize: '22px', // placeholder 글꼴 크기
